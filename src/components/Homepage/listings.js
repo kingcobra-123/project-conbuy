@@ -9,6 +9,8 @@ import { Feather } from '@expo/vector-icons';
 import HomePage from './homepage'
 import MyTabs from './bottomtabnavigator'
 import DetailedListings from './detailedlistings'
+import MasonryList from '@react-native-seoul/masonry-list';
+
 
 const Listings = ({navigation, route}) =>{
     const [loading, setLoading] = useState(true);
@@ -121,8 +123,8 @@ const Listings = ({navigation, route}) =>{
                             numColumns={2} 
                             contentContainerStyle={styles.boxcontainer}
                             columnWrapperStyle ={styles.columnWrapper}
-                    />
-                    
+                    ></FlatList>
+                   
                 </View>
                 
             )}
@@ -164,6 +166,7 @@ const styles = StyleSheet.create({
       },
     itemcontainer:{
         width: '100%',
+        height: 250,
         alignItems: 'center',
         margin: 2,
         flexWrap: 'wrap',

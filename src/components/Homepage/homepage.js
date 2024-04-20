@@ -159,7 +159,8 @@ const styles = StyleSheet.create({
     header:{
         flexWrap: 'wrap',
         flexDirection: 'row',
-        paddingBottom:12
+        paddingBottom:12,
+        
     },
     text1:{
         paddingLeft:10,

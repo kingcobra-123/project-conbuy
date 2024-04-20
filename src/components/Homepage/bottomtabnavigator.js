@@ -3,6 +3,8 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import HomePage from './homepage';
 import Listings from './listings';
+import PostScreen from '../Createpage/postscreen';
+import Friends from '../friendsandfamily/friendsandfamily';
 import DetailedListings from './detailedlistings';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -49,7 +51,7 @@ const MyTabs = ()=> {
       />
       <Tab.Screen
         name="Create"
-        component={Listings} // Change to your create component
+        component={PostScreen} // Change to your create component
         options={{
           tabBarLabel: 'Create',
           tabBarIcon: ({ color }) => (
@@ -59,7 +61,7 @@ const MyTabs = ()=> {
       />
       <Tab.Screen
         name="Friends"
-        component={Listings} // Change to your friends component
+        component={Friends} // Change to your friends component
         options={{
           tabBarLabel: 'Friends',
           tabBarIcon: ({ color }) => (

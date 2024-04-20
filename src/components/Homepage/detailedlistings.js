@@ -6,6 +6,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import Carousel from 'react-native-snap-carousel';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { Video } from 'expo-av';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 
@@ -68,6 +69,7 @@ const DetailedListings = ({navigation, route})=>{
     const renderReview = ({item}) => {
         if(item.type === 'video'){
             return(
+                <SafeAreaView>
                 <Video
                     ref={videoRef}
                     source={{uri: item.url}}
@@ -79,12 +81,13 @@ const DetailedListings = ({navigation, route})=>{
                     isLooping ={false}
                     useNativeControls={true}
                     style={styles.videoStyle}
-                    
-                
                 ></Video>
+                </SafeAreaView>
             )} else{
                 return(
+                    <SafeAreaView>
                     <Image source={{ uri: item.url }} style={styles.imageStyle} />
+                    </SafeAreaView>
                 )
             }
         };
@@ -107,6 +110,7 @@ const DetailedListings = ({navigation, route})=>{
     };
     
     return (
+            
             <ScrollView style={styles.container}>
                 <>
                 <Carousel
@@ -161,6 +165,7 @@ const DetailedListings = ({navigation, route})=>{
                 </>
                 
             </ScrollView>
+            
         );}
 
 export default DetailedListings;
