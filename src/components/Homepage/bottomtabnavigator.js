@@ -4,6 +4,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import HomePage from './homepage';
 import Listings from './listings';
 import PostScreen from '../Createpage/postscreen';
+import CreatePost from '../Createpage/createpost';
+import CreatePostRender from '../Createpage/createpostrender';
 import Friends from '../friendsandfamily/friendsandfamily';
 import DetailedListings from './detailedlistings';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -51,7 +53,7 @@ const MyTabs = ()=> {
       />
       <Tab.Screen
         name="Create"
-        component={PostScreen} // Change to your create component
+        component={PostScreen} 
         options={{
           tabBarLabel: 'Create',
           tabBarIcon: ({ color }) => (
@@ -61,7 +63,7 @@ const MyTabs = ()=> {
       />
       <Tab.Screen
         name="Friends"
-        component={Friends} // Change to your friends component
+        component={Friends} 
         options={{
           tabBarLabel: 'Friends',
           tabBarIcon: ({ color }) => (
@@ -71,7 +73,7 @@ const MyTabs = ()=> {
       />
       <Tab.Screen
         name="Profile"
-        component={Listings} // Change to your profile component
+        component={CreatePostRender} 
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color }) => (

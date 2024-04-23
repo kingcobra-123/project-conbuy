@@ -8,11 +8,10 @@ import { Video } from "expo-av";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 
-const Uploading = ({image, video, progress }) => {
+const Uploading = ({progress }) => {
 
     return(
-        <Modal 
-        visible={image !== null || video !== null} 
+        <Modal  
         transparent animationType="fade">
             <View  style ={styles.container}>
                 <BlurView 
@@ -22,29 +21,6 @@ const Uploading = ({image, video, progress }) => {
                 <View
                 style = {styles.blurContainer}
                 >
-                    {/* {image && (
-                        <Image 
-                        source = {{uri: image}} 
-                        style = {{
-                            width: 100, 
-                            height: 100, 
-                            borderRadius: 6,
-                            resizeMode: 'contain'
-                            }} />
-                    )}
-
-                    {video && (
-                        <Video 
-                        source = {{uri: video}} 
-                        videoStyle = {{}}
-                        rate={1.0}
-                        volume={1.0}
-                        isMuted={false}
-                        resizeMode="contain"
-                        style = {{width:'80%', height:'80%'}}
-                        />
-                    )} */}
-                    
                         <Text style={{fontSize:12}}>Uploading...</Text>
                         <ProgressBar progress={progress} />
                        <View style = {styles.separator}></View>

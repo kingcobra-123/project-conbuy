@@ -19,6 +19,7 @@ const MediaPickerModal = ({ visible, onSelect, onClose }) => {
     const [progress, setProgress] = useState(0);
     const [pickervisible, setPickerVisible] = useState(false);
     const [selectedImageUrls, setSelectedImageUrls] = useState([]);
+    const [selectedVideoUrls, setSelectedVideoUrls] = useState([]);
 
     const pickImage = async () => {
         
@@ -30,10 +31,11 @@ const MediaPickerModal = ({ visible, onSelect, onClose }) => {
             
            
     });
-    if (!result.canceled && result.assets) {
+   if (!result.canceled && result.assets) {
         setUploading(true);
          result.assets.forEach((asset) => {
-              setImage(oldimage => [...oldimage, asset.uri])
+            const source = {uri: asset.uri};
+              setImage(oldimage => [...oldimage, source])
               uploadImage(asset.uri, 'image');
               setPickerVisible(false);
               onClose();
@@ -47,50 +49,84 @@ const MediaPickerModal = ({ visible, onSelect, onClose }) => {
 
 
 
-const uploadImage = async (uri, filetype) => {
-    const response = await fetch(uri);
-    const blob = await response.blob();
-    const storageRef = ref(Firebase_storage, `apptestupload-images/${new Date().getTime()}`);
-    const uploadTask = uploadBytesResumable(storageRef, blob, { contentType: 'image/jpeg' });
+    const uploadImage = async (uri, filetype) => {
+        
+        const response = await fetch(uri);
+        const blob = await response.blob();
+        const storageref = ref(Firebase_storage, 'apptestupload-images/' + new Date().getTime());
+        const uploadTask = uploadBytesResumable(storageref, blob, {contentType: 'image/jpeg'});
+
+        uploadTask.on('state_changed', (snapshot) => {
+            const progress1 = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            setProgress(progress1.toFixed());
+        },
+        (error) => {
+            alert('An error occured: ' + error.message);
+        },
+        async () => {
+
+        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+        setSelectedImageUrls((prevUrls) => [...prevUrls, downloadURL]);
+        setUploading(false);
+        setImage([]);
+    })
+
+    useEffect(() => {
+        if (selectedImageUrls.length > 0) {
+            onSelect(selectedImageUrls);
+            setSelectedImageUrls([]);
+        }
+    }, [selectedImageUrls, onSelect])}
     
-    uploadTask.on('state_changed',
-            (snapshot) => {
-                const progressUpdate = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                setProgress(progressUpdate.toFixed(2));
-            }, (error) => {
-                // A full list of error codes is available at
-                // https://firebase.google.com/docs/storage/web/handle-errors
-                switch (error.code) {
-                  case 'storage/unauthorized':
-                    // User doesn't have permission to access the object
-                    break;
-                  case 'storage/canceled':
-                    // User canceled the upload
-                    break;
-            
-                  // ...
-            
-                  case 'storage/unknown':
-                    // Unknown error occurred, inspect error.serverResponse
-                    break;
-                }
-              },
-            () => {
-                getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-                    console.log('File available at', downloadURL);
-                    setSelectedImageUrls((prevUrls) => [...prevUrls, downloadURL]);
-                    setUploading(false);
-                    setImage([]);
-                    onSelect([downloadURL]);
-                });
+
+
+    const pickVideo = async () => {
+        let result  = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+            aspect: [3, 4],
+            quality: 1,
+            allowsMultipleSelection: true
+        })
+        if (!result.canceled && result.assets) {
+            setUploading(true);
+            result.assets.forEach((asset) => {
+                const source = {uri: asset.uri};
+                setVideo(oldvideo => [...oldvideo, source])
+                uploadVideo(asset.uri, 'video');
+                setPickerVisible(false);
+                onClose();
+            })
+    };
+
+    const uploadVideo = async (uri, filetype) => {
+        const response = await fetch(uri);
+        const blob = await response.blob();
+        const storageref = ref(Firebase_storage, 'apptestupload-videos/' + new Date().getTime());
+        const uploadTask = uploadBytesResumable(storageref, blob, {contentType: 'video/mp4'});
+
+        uploadTask.on('state_changed', (snapshot) => {
+            const progress1 = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            setProgress(progress1.toFixed());
+        },
+        (error) => {
+            alert('An error occured: ' + error.message);
+        },
+        async () => {
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+            setSelectedVideoUrls((prevUrls) => [...prevUrls, downloadURL]);
+            setUploading(false);
+            setVideo([]);
+        })
+
+        useEffect(() => {
+            if (selectedVideoUrls.length > 0) {
+                onSelect(selectedVideoUrls);
+                setSelectedVideoUrls([]);
             }
-        );
-    ;
-};
-    
+        }, [selectedVideoUrls, onSelect])
+    };
 
 
-    const pickVideo = async () => {};
 
     return (
         <>
@@ -122,6 +158,7 @@ const uploadImage = async (uri, filetype) => {
         </>
     );
 };
+}
 
 export default MediaPickerModal;
 

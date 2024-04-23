@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, createContext, useContext } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import Landingpage from './components/auth/landingpage';
@@ -14,10 +14,15 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Firebase_App } from './components/auth/firebaseconfig';
 import { Firebase_Auth } from './components/auth/firebaseconfig';
 import { onAuthStateChanged } from 'firebase/auth';
+import UserProvider from './components/userprofile/userprofile';
 
 
 
 const Stack = createStackNavigator();
+
+
+
+
 
 export default function App() {
   const[loading, setLoading] = useState(true)
@@ -40,41 +45,43 @@ export default function App() {
 
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="LandingPage"
-      screenOptions={{headerShown: false}}>
-        {user ? (
-          <Stack.Screen
-            name = "bottomtabs"
-            component={MyTabs}
-            screenOptions={{headerShown:false}}
-          ></Stack.Screen>
-        ) : (
-          <>
+    <UserProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="LandingPage"
+        screenOptions={{headerShown: false}}>
+          {user ? (
             <Stack.Screen
-              name="LandingPage"
-              component={Landingpage}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="SignUp Page"
-              component={SignUp}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="SignIn"
-              component={SignIn}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="ForgetPassword"
-              component={ForgetPassword}
-              options={{ headerShown: false }}
-            />
-          </>
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
+              name = "bottomtabs"
+              component={MyTabs}
+              screenOptions={{headerShown:false}}
+            ></Stack.Screen>
+          ) : (
+            <>
+              <Stack.Screen
+                name="LandingPage"
+                component={Landingpage}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="SignUp Page"
+                component={SignUp}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="SignIn"
+                component={SignIn}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="ForgetPassword"
+                component={ForgetPassword}
+                options={{ headerShown: false }}
+              />
+            </>
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+      </UserProvider>
   );
 }
 
