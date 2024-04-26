@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator} from 'react-native'
-import { TextInput } from 'react-native-gesture-handler'
+import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, TextInput} from 'react-native'
 import { Firebase_App, Firebase_Auth } from './firebaseconfig';
 import {createUserWithEmailAndPassword, updateProfile} from "firebase/auth"
 import SignIn from './signin';

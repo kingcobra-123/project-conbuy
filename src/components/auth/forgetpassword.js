@@ -1,7 +1,6 @@
 import React from 'react'
 import SignIn from './signin'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import { TextInput } from 'react-native-gesture-handler'
+import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
 
 const ForgetPassword = ({navigation}) => {
 

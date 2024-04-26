@@ -1,6 +1,6 @@
 import { useEffect, useState, createContext, useContext } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, useColorScheme} from 'react-native';
 import Landingpage from './components/auth/landingpage';
 import SignUp from './components/auth/signup';
 import SignIn from './components/auth/signin';
@@ -15,6 +15,7 @@ import { Firebase_App } from './components/auth/firebaseconfig';
 import { Firebase_Auth } from './components/auth/firebaseconfig';
 import { onAuthStateChanged } from 'firebase/auth';
 import UserProvider from './components/userprofile/userprofile';
+import * as SystemUI from 'expo-system-ui';
 
 
 

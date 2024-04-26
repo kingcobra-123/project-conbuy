@@ -1,6 +1,6 @@
 import React, { Component, useEffect, useState } from 'react'
-import { Text, View, StyleSheet, SafeAreaView, Image, FlatList, Touchable, TouchableOpacity } from 'react-native'
-import { ScrollView, TextInput } from 'react-native-gesture-handler'
+import { Text, View, StyleSheet, SafeAreaView, Image, FlatList, Touchable, TouchableOpacity ,
+        ScrollView, TextInput} from 'react-native'
 import { getDocs, collection } from 'firebase/firestore'
 import { Firebase_Auth, Firebase_db } from '../auth/firebaseconfig'
 import RNPickerSelect from 'react-native-picker-select';

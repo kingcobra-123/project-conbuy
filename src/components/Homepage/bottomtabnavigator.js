@@ -64,7 +64,7 @@ const MyTabs = ()=> {
       />
       <Tab.Screen
         name="Friends"
-        component={Listings} 
+        component={FnFListingsrender} 
         options={{
           tabBarLabel: 'Friends',
           tabBarIcon: ({ color }) => (
@@ -74,7 +74,7 @@ const MyTabs = ()=> {
       />
       <Tab.Screen
         name="Profile"
-        component={FnFListingsrender} 
+        component={Listings} 
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color }) => (

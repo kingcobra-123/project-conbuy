@@ -1,6 +1,14 @@
 import React, {useEffect, useState} from 'react'
-import { Text, View, StyleSheet, ActivityIndicator, Image, FlatList, TouchableOpacity} from 'react-native'
-import { ScrollView, TextInput } from 'react-native-gesture-handler'
+import { 
+    Text, 
+    View, 
+    StyleSheet, 
+    ActivityIndicator, 
+    Image, 
+    FlatList, 
+    TouchableOpacity,
+    ScrollView, TextInput
+    } from 'react-native'
 import { collection, getDocs } from 'firebase/firestore'
 import { Firebase_db } from '../auth/firebaseconfig'
 import { Firebase_Auth } from '../auth/firebaseconfig'
