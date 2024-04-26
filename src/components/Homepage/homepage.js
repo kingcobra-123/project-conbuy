@@ -26,7 +26,7 @@ const HomePage =({navigation})=>{
     const[mattress, setMattress] =useState([]);
     const[currentuser, setCurrentUser] =useState(null)
     const[category, setCategory] =useState('')
-    const [selectedSofa, setSelectedSofa] = useState(null);
+    const [selectedSofa, setSelectedSofa] = useState([]);
 
     useEffect(()=>{
         const subsribe = onAuthStateChanged(Firebase_Auth, (user)=>{
@@ -194,8 +194,8 @@ const styles = StyleSheet.create({
           height: 160,
           backgroundColor: '#fff',
           margin:5,
-          elevation: 3,
-          shadowColor: '#FFF',
+          elevation: 15,
+          shadowColor: '#F7A70B',
           flexWrap: 'wrap',
           flexDirection: 'row',
           borderRadius:10,

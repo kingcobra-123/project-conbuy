@@ -6,52 +6,27 @@ import { Firebase_Auth, Firebase_db } from '../auth/firebaseconfig'
 import RNPickerSelect from 'react-native-picker-select';
 import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
-import HomePage from './homepage'
-import MyTabs from './bottomtabnavigator'
-import DetailedListings from './detailedlistings'
+import HomePage from '../Homepage/homepage'
+import MyTabs from '../Homepage/bottomtabnavigator'
+import DetailedListings from '../Homepage/detailedlistings'
 import MasonryList from '@react-native-seoul/masonry-list';
+import FetchFnF from './fnfusers';
 
 
-const Listings = ({navigation, route}) =>{
-    const [loading, setLoading] = useState(true);
+const FnFListingsrender = ({navigation}) =>{
+    const {fnfusers, fnfposts} = FetchFnF()
     const [reviews, setReviews] = useState([])
     const [selected, setSelected] = useState(null)
     const [dropdown, setDropDown] = useState(false)
-    const title = route.params?.title
-    useEffect(()=>{
-        
-        const fetchdata = async() =>{
-        try{
-            const reviewsnapshot = await getDocs(collection(Firebase_db, "reviews"))
-            const reviews = reviewsnapshot.docs.map(docs =>({
-                ...docs.data(),
-                id: docs.id,
-                review_image_url: docs.data().review_image_url||[],
-                review_title: docs.data().review_title || "No Title"
-            })
-            )
-            const filteredReviews = title? reviews.filter((item)=>{
-               return item.review_sub_category === title
-
-            }): reviews
-
-            
-            setReviews(filteredReviews)
-        
-        }catch(error){
-            console.error("Error fetching data", error)
-        } finally{
-            setLoading(false)
-        }
-
-
-    }
-    fetchdata()}, [title])
+    
 
     const renderReview = ({ item,index }) => {
         const isFirstItem =index===0;
         return(
-            
+            <View>
+                <View style={styles.imageContainer}>
+                    <Text style={styles.titleStyle}>{item.review_username}</Text>
+                </View>
                 <TouchableOpacity 
                 onPress={()=>onPressReviewHandler(item.id)}
                 style={styles.itemcontainer}>
@@ -60,6 +35,7 @@ const Listings = ({navigation, route}) =>{
                         <Text style={styles.titleStyle} numberOfLines={3}>{item.review_title}</Text>
                     </View>
                 </TouchableOpacity>
+             </View>
             
         );
                     
@@ -74,7 +50,6 @@ const Listings = ({navigation, route}) =>{
     const toggleDropdown = () =>{
         setDropDown(!dropdown)
     }
-
     const onPressReviewHandler =(id)=>{
         navigation.navigate('DetailedListings', {id: id})
     }
@@ -97,9 +72,6 @@ const Listings = ({navigation, route}) =>{
                 <Feather onPress={toggleDropdown} name="filter" size={24} color="black" />
                 </View>
             </View>
-            {loading ? (
-                <Text>Loading...</Text>
-            ) : (
                 <View>
                     <View style={styles.dropdown}>
                         {dropdown && (
@@ -116,38 +88,27 @@ const Listings = ({navigation, route}) =>{
                          )}
                     </View>
                     <FlatList
-                            data={reviews}
+                            data={fnfposts}
                             keyExtractor={item => item.id}
                             renderItem={renderReview}
-                            numColumns={2} 
+                            numColumns={1} 
                             contentContainerStyle={styles.boxcontainer}
-                            columnWrapperStyle ={styles.columnWrapper}
-                    ></FlatList>
-                   
+                            // columnWrapperStyle ={styles.columnWrapper}
+                    ></FlatList>   
                 </View>
-                
-            )}
-        </View>
-    );
+                 </View>
+                 )}
 
-
-
-
-}
-
-export default Listings
+export default FnFListingsrender;
 
 const styles = StyleSheet.create({
     container:{
         width: '100%',
         alignItems: 'stretch'
         
-        
-        
     },
     boxcontainer:{
-        
-        
+        width: '100%',
         backgroundColor: '#ffff',
         
         
@@ -165,9 +126,8 @@ const styles = StyleSheet.create({
       },
     itemcontainer:{
         width: '100%',
-        height: 250,
+        height: 300,
         alignItems: 'center',
-        margin: 2,
         flexWrap: 'wrap',
         flexDirection: 'row',
         borderRadius:10,
@@ -177,8 +137,8 @@ const styles = StyleSheet.create({
 
     },
     imageStyle: {
-        width: 195, 
-        height: 200, 
+        width: '100%', 
+        height: 250, 
         resizeMode: 'cover',
         borderRadius:10
     },
@@ -214,11 +174,13 @@ const styles = StyleSheet.create({
         width: 30,  
         justifyContent: 'space-between', 
     },
+    imageContainer:{
+        width: '100%',
+        height:30,
+
     
+    }
     
-
-
-
 })
 
 const pickerSelectStyles = StyleSheet.create({

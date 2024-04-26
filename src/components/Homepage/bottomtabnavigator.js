@@ -1,14 +1,15 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import HomePage from './homepage';
-import Listings from './listings';
+import HomePage from '../Homepage/homepage';
+import Listings from '../Homepage/listings';
 import PostScreen from '../Createpage/postscreen';
 import CreatePost from '../Createpage/createpost';
-import CreatePostRender from '../Createpage/createpostrender';
-import Friends from '../friendsandfamily/friendsandfamily';
+import FnFListingsrender from '../friendsandfamily/fnflistings';
 import DetailedListings from './detailedlistings';
 import { createStackNavigator } from '@react-navigation/stack';
+import { List } from 'react-native-paper';
+import { list } from 'firebase/storage';
 
 
 const Tab = createMaterialBottomTabNavigator();
@@ -63,7 +64,7 @@ const MyTabs = ()=> {
       />
       <Tab.Screen
         name="Friends"
-        component={Friends} 
+        component={Listings} 
         options={{
           tabBarLabel: 'Friends',
           tabBarIcon: ({ color }) => (
@@ -73,7 +74,7 @@ const MyTabs = ()=> {
       />
       <Tab.Screen
         name="Profile"
-        component={CreatePostRender} 
+        component={FnFListingsrender} 
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color }) => (
