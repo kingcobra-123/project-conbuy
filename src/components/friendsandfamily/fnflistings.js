@@ -21,6 +21,7 @@ const FnFlistingsRender = ({navigation}) => {
     const [dropdown, setDropDown] = useState(false)
     const [dropdownselected, setDropDownSelected] = useState(null)
     const [formatdate, setFormatDate] = useState([])
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const inputRef = useRef(null)
     const userdata_temp = useContext(userMetadata);
 
@@ -39,12 +40,16 @@ const FnFlistingsRender = ({navigation}) => {
         }}); setFormatDate(dates)
                 
             };
-            // setFormatDate(dates);
     },[fnfposts])
 
     const onPressReviewHandler =(id)=>{
         navigation.navigate('DetailedListings', {id: id})
     }
+
+    const updateIndex = ({ nativeEvent }) => {
+        const index = Math.ceil(nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width);
+        setCurrentImageIndex(index);
+    };
 
     const renderHeader = () => (
         <>
@@ -76,7 +81,15 @@ const FnFlistingsRender = ({navigation}) => {
         </>
     );
 
-    ;
+    const renderPaginationDots = (item) => {
+        return (
+            <View style={styles.dotContainer}>
+                {item.review_image_url.map((_, idx) => (
+                    <View key={idx} style={[styles.dot, currentImageIndex === idx ? styles.activeDot : styles.inactiveDot]} />
+                ))}
+            </View>
+        );
+    };
 
     
     const renderReview = ({ item,index }) => {
@@ -87,8 +100,19 @@ const FnFlistingsRender = ({navigation}) => {
                     <Text style={styles.postHeaderTitle}>{item.review_username}</Text>
                     <MaterialCommunityIcons name="dots-horizontal" size={24} color="black" />
                 </View>
-                <View style={styles.postcontainer}>
-                    <Image source={{ uri: item.review_image_url[0] }} style={styles.postimageStyle} />
+                <View >
+                    <View style={styles.postcontainer}>
+                        <ScrollView
+                            onScroll={updateIndex}
+                            showsHorizontalScrollIndicator={false} 
+                            horizontal 
+                            style={styles.imageContainer} >
+                                {item.review_image_url.map((image, index) => {
+                                    return <Image source={{ uri: image }} key={index} style={styles.postimageStyle} />
+                            })}
+                        </ScrollView>
+                        {renderPaginationDots(item)}
+                    </View>
                         <View style={styles.postIconsContainer}>
                             <FontAwesome5 name="heart" size={24} color="black" style={styles.postIconStyle}/>
                             <FontAwesome5 name="comments" size={24} color="black" style={styles.postIconStyle} />
@@ -155,9 +179,6 @@ const styles = StyleSheet.create({
         borderBottomWidth:1,
         borderBottomColor:'lightgrey'
     },
-    // boxcontainer:{
-    //     width: '100%'
-    // },
     postHeader:{
         flexDirection:'row',
         padding:10,
@@ -178,14 +199,21 @@ const styles = StyleSheet.create({
     },
     postcontainer:{
         width: '100%',
+        height: 280,
         alignItems: 'center',
         flexGrow:1,
         flexShrink:1
 
     },
+    imageContainer:{
+        width: '100%',
+        height: '100%',
+        flexDirection: 'row',
+
+    },
     postimageStyle: {
-        width: '100%', 
-        height: 250, 
+        width: 400, 
+        height: '100%', 
         resizeMode: 'cover'
     },
     postTitleStyle: {
@@ -227,6 +255,27 @@ const styles = StyleSheet.create({
         paddingTop:5,
         paddingRight:5,
         paddingBottom:5
+    },
+    dotContainer: {
+        position: 'absolute',
+        bottom: 5, 
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0)',
+    },
+    dot: {
+        height: 5,
+        width: 5,
+        borderRadius: 5,
+        marginHorizontal: 5,
+    },
+    activeDot: {
+        backgroundColor: '#F7A70B',
+    },
+    inactiveDot: {
+        backgroundColor: 'gray',
     },
     
 

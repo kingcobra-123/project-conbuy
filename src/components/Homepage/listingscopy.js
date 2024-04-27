@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect, useContext } from 'react'
-import { Text, View, Image, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
+import { Text, View, Image, StyleSheet, FlatList, TouchableOpacity, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons, MaterialCommunityIcons, Feather, Ionicons } from '@expo/vector-icons';
 import RNPickerSelect from 'react-native-picker-select';
@@ -21,6 +21,7 @@ const ListingsCopy = ({navigation, route}) => {
     const [loading, setLoading] = useState(true);
     const [reviews, setReviews] = useState([])
     const [reviewuserdata, setReviewUserData] = useState([])
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const userdata_temp = useContext(userMetadata);
 
     const toggleDropdown = () => {
@@ -46,6 +47,29 @@ const ListingsCopy = ({navigation, route}) => {
         ); setReviewUserData(reviewusers);
 
     };
+
+    const updateIndex = ({ nativeEvent }) => {
+        const index = Math.ceil(nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width);
+        setCurrentImageIndex(index);
+    };
+    const renderPaginationDots = (total, currentIndex) => (
+        <View style={styles.dotContainer}>
+          {Array.from({ length: total }, (_, idx) => (
+            <View
+              key={idx}
+              style={[
+                styles.dot,
+                currentIndex === idx ? styles.activeDot : styles.inactiveDot,
+              ]}
+            />
+          ))}
+        </View>
+      );
+
+      const renderScrollDots =(item, index) =>{};
+
+
+
     useEffect(()=>{
         const title = route.params?.title
         setTitle(title)
@@ -76,10 +100,52 @@ const ListingsCopy = ({navigation, route}) => {
         }}
     fetchdata()}, [title])
 
+   
 
-    const renderHeader = () => (
-        <>
-         <View style={styles.header}>
+    
+    const renderReview = ({ item,index }) => {
+        const isFirstItem =index % 2 === 0;
+        
+        return(
+                        <View >
+                            <View style={isFirstItem?styles.postContainer1: styles.postContainer}>
+                                <ScrollView
+                                onScroll={updateIndex}
+                                showsHorizontalScrollIndicator={false} 
+                                horizontal 
+                                pagingEnabled
+                                scrollEventThrottle={16}
+                                style={styles.postImageContainer} >
+                                    {item.review_image_url.map((image, i) => {
+                                        return <Image source={{ uri: image }} key={i} style={styles.postImageStyle}
+                                        onError={(error) => console.log('Error loading image:', error)} />
+                                })}
+                                
+                                </ScrollView>
+                                {renderPaginationDots(item.review_image_url.length, currentImageIndex)}
+                            </View>
+                            
+                            <View style={styles.postTextBox}>
+                                <TouchableOpacity onPress={()=>onPressReviewHandler(item.id)} style={styles.postTextBox1} >
+                                    <Text style={styles.postTitleStyle} numberOfLines={2}>{item.review_title}</Text>
+                                    <View style={styles.postUserDetails}>
+                                        <Image source={{uri: item.reviewUserPhotoURL}} style={styles.userPicStyle}></Image>
+                                        <Text style={styles.postUserTitleStyle} numberOfLines={1}>{item.reviewUserDisplayName}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    
+            
+        );
+                    
+                
+        
+    };
+
+    return (
+        <SafeAreaView>
+             <View style={styles.header}>
                 <View style={styles.headerLeft}>
                     <Ionicons name="chevron-back" size={24} color="black" 
                     onPress={onPressBackHandler}/>
@@ -113,48 +179,13 @@ const ListingsCopy = ({navigation, route}) => {
                 placeholder='Search Reviews.....'
                 autoCapitalize='none'></TextInput>
             </View>
-        </>
-    );
-
-
-    const renderReview = ({ item,index }) => {
-        const isFirstItem =index % 2 === 0;
-        return(
-
-           
-            
-                <TouchableOpacity 
-                onPress={()=>onPressReviewHandler(item.id)}
-                style={isFirstItem?styles.postContainer1: styles.postContainer}>
-                        <View style={styles.postContainer}>
-                            <Image source={{ uri: item.review_image_url[0] }} style={styles.postImageStyle} />
-                            <View style={styles.postTextBox}>
-                                <Text style={styles.postTitleStyle} numberOfLines={2}>{item.review_title}</Text>
-                                <View style={styles.postUserDetails}>
-                                    <Image source={{uri: item.reviewUserPhotoURL}} style={styles.userPicStyle}></Image>
-                                    <Text style={styles.postUserTitleStyle} numberOfLines={1}>{item.reviewUserDisplayName}</Text>
-                                </View>
-                            </View>
-                        </View>
-                    
-                    
-                </TouchableOpacity>
-            
-        );
-                    
-                
-        
-    };
-
-    return (
-        <SafeAreaView>
             <FlatList
-                ListHeaderComponent={renderHeader}
+                // ListHeaderComponent={renderHeader}
                 data={reviewuserdata}
                 keyExtractor={item => item.id}
                 renderItem={renderReview}
                 numColumns={2} 
-                contentContainerStyle={styles.flatListcontainer}
+                // contentContainerStyle={styles.flatListcontainer}
                 columnWrapperStyle ={styles.columnWrapper}
             ></FlatList>
         </SafeAreaView>
@@ -216,36 +247,44 @@ const styles = StyleSheet.create({
       },
       columnWrapper: {
         justifyContent: 'space-between', 
+        paddingHorizontal: 3,
     },
     postContainer:{
         width: '100%',
-        height: 360,
+        height: 330,
         alignItems: 'center',
         flexWrap: 'wrap',
         flexDirection: 'row',
-        overflow: 'hidden',
         flexGrow:1,
         flexShrink:1,
-        paddingTop:5
+        paddingTop:2,
+        borderRightWidth:2,
+        borderRightColor:'lightgrey',
 
     },
     postContainer1:{
         width: '100%',
-        height: 370,
+        height: 330,
         alignItems: 'center',
         flexWrap: 'wrap',
         flexDirection: 'row',
-        overflow: 'hidden',
         flexGrow:1,
         flexShrink:1,
-        paddingTop:5,
-        marginTop:7
+        paddingTop:7,
+        borderRightWidth:2,
+        borderRightColor:'lightgrey',
 
     },
+    postImageContainer:{
+
+        width: '50%',
+        height: 320,
+        flexDirection: 'row',
+    },
     postImageStyle: {
-        width: 195, 
-        height: 270, 
-        resizeMode: 'cover'
+        width: 200, 
+        height: '100%', 
+        resizeMode: 'cover',
     },
     postImageStyle1: {
         width: 195, 
@@ -253,10 +292,12 @@ const styles = StyleSheet.create({
         resizeMode: 'cover'
     },
     postTextBox: {
-        width: '100%', 
-        height: 80,
+        width: 180, 
+        height: 90,
         paddingTop:5,
         paddingLeft:5,
+        borderBottomWidth:1,
+        borderBottomColor:'lightgrey',
     },
     postTextBox1: {
         width: '100%', 
@@ -269,6 +310,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         fontWeight: '500',
+        textAlign: 'left'
     },
     userPicStyle:{
         width: 30,
@@ -287,6 +329,29 @@ const styles = StyleSheet.create({
         paddingTop:5,
         paddingLeft:5
     },
+    dotContainer: {
+        position: 'absolute',
+        bottom: 5, 
+        width: '50%',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0)',
+        marginLeft: 40,
+        marginBottom: 5
+    },
+    dot: {
+        height: 5,
+        width: 5,
+        borderRadius: 5,
+        marginHorizontal: 5,
+    },
+    activeDot: {
+        backgroundColor: '#F7A70B',
+    },
+    inactiveDot: {
+        backgroundColor: 'gray',
+    }
       
 
 })
