@@ -55,9 +55,11 @@ const Listings = ({navigation, route}) =>{
                 <TouchableOpacity 
                 onPress={()=>onPressReviewHandler(item.id)}
                 style={styles.itemcontainer}>
-                    <Image source={{ uri: item.review_image_url[0] }} style={styles.imageStyle} />
-                    <View style={styles.textBox}>
-                        <Text style={styles.titleStyle} numberOfLines={3}>{item.review_title}</Text>
+                    <View>
+                        <Image source={{ uri: item.review_image_url[0] }} style={styles.imageStyle} />
+                        <View style={styles.textBox}>
+                            <Text style={styles.titleStyle} numberOfLines={3}>{item.review_title}</Text>
+                        </View>
                     </View>
                 </TouchableOpacity>
             

@@ -16,6 +16,7 @@ import { onAuthStateChanged } from 'firebase/auth'
 import Listings from './listings'
 import MyTabs from './bottomtabnavigator'
 import { Octicons } from '@expo/vector-icons';
+import fetchUserData from '../userprofile/userdata'
 
 
 const categories = ()=>{
@@ -81,13 +82,12 @@ const HomePage =({navigation})=>{
     const onPressHandler = (item)=>{
         setSelectedSofa(item)
         navigateToDetails(item)
-        console.log()
 
     }
 
     const navigateToDetails = (item) => {
         if (selectedSofa) {
-            navigation.navigate('Listings', { title: item });
+            navigation.navigate('Profile', { title: item });
         }
     };
          
@@ -98,7 +98,8 @@ const HomePage =({navigation})=>{
             <View style={styles.container}>
                 <View style={styles.header}>
                     <View style = {styles.iconContainer}>
-                    <Octicons name="three-bars" size={20} color="black" />
+                    <Octicons name="three-bars" size={20} color="black" 
+                    onPress={()=>{fetchUserData()}}/>
                     </View>
                     <Text style={styles.text1}>ConBuy</Text>
                     <Text style={styles.text2}>{`Hey ${currentuser}`}</Text>

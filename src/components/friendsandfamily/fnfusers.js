@@ -1,16 +1,32 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { Component, useEffect, useState, useContext } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Firebase_Auth, Firebase_db } from '../auth/firebaseconfig';
 import { getDocs, collection, where, query } from 'firebase/firestore';
 import firebase from 'firebase/compat/app';
 import UserName from '../userprofile/username';
+import { userMetadata } from '../userprofile/usermetadata';
+import { set } from 'firebase/database';
 
 const FetchFnF = () => {
     const [fnfusers, setFnfUsers] = useState([])
+    const [fnfusersimage, setFnfUsersImage] = useState([])
     const [fnfposts, setFnfPosts] = useState([])
     const [loading, setLoading] = useState(true)
     const user = UserName();
+    const userdata_temp = useContext(userMetadata);
+
+    const fetchfnfuserdata = (userlist, userdata) => {
+            const fnfusers = userlist.map(item =>{
+                return userdata.filter(data => data.displayName === item)
+                 
+            })
+            const fnfusers2 = fnfusers.map(item =>({
+                displayName: item[0].displayName,
+                photoURL: item[0].photoURL
+            }))
+            setFnfUsersImage(fnfusers2)}
+            
 
 useEffect(() => {
     const fetchFnFData = async () => {
@@ -43,6 +59,8 @@ useEffect(() => {
                         item.fnf_connected_user
                     ); 
                     setFnfUsers(userlist);
+                    fetchfnfuserdata(userlist, userdata_temp.userdata)
+                    
                     fetchFnFPosts(userlist)
                 } else{setLoading(false)}
             } catch (error) {
@@ -51,11 +69,11 @@ useEffect(() => {
             }
     };
     if(user){
-        fetchFnFData()
+        fetchFnFData();
     };
 }, [user]);
 
-return ({fnfusers, fnfposts, loading})
+return ({fnfusers, fnfposts, fnfusersimage, loading})
 
 
 }

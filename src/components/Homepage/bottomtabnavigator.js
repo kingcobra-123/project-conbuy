@@ -12,6 +12,9 @@ import { List } from 'react-native-paper';
 import { list } from 'firebase/storage';
 
 
+import ListingsCopy from './listingscopy';
+
+
 const Tab = createMaterialBottomTabNavigator();
 const Listingsstack = createStackNavigator()
 
@@ -44,7 +47,7 @@ const MyTabs = ()=> {
       />
       <Tab.Screen
         name="Listings"
-        component={ListingsStackScreen}
+        component={ListingsCopy}
         options={{
           tabBarLabel: 'Listings',
           tabBarIcon: ({ color }) => (
@@ -74,7 +77,7 @@ const MyTabs = ()=> {
       />
       <Tab.Screen
         name="Profile"
-        component={Listings} 
+        component={ListingsCopy} 
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color }) => (

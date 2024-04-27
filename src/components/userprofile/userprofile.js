@@ -7,11 +7,20 @@ export const userContext = React.createContext(null)
 
 const UserProvider = ({children}) => {
   const [user, setUser] = useState(null)
+  const[loading, setLoading] = useState(true)
   const auth = Firebase_Auth
 
   useEffect(()=>{
+    setLoading(true)
     const subscribe = onAuthStateChanged(auth, currentuser=>{
-      setUser(currentuser)
+      if(currentuser){
+        setUser(currentuser)
+        setLoading(false)
+      } else {
+        setUser(null)
+        setLoading(false)
+      }
+
     });
     return subscribe;
   }, [])

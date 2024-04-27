@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useRef, useState } from 'react'
+import React, { Component, useEffect, useRef, useState, useContext } from 'react'
 import { Text, View, StyleSheet, SafeAreaView, Image, FlatList, Touchable, TouchableOpacity,
             ScrollView, TextInput } from 'react-native'
 
@@ -13,13 +13,16 @@ import MasonryList from '@react-native-seoul/masonry-list';
 import FetchFnF from './fnfusers';
 import FormatReviewDate from './fetchDate';
 import {Picker} from '@react-native-picker/picker';
+import fetchUserData from '../userprofile/userdata';
+import { userMetadata } from '../userprofile/usermetadata';
 
 const FnFlistingsRender = ({navigation}) => {
-    const {fnfusers, fnfposts} = FetchFnF()
+    const {fnfusers, fnfposts, fnfusersimage} = FetchFnF()
     const [dropdown, setDropDown] = useState(false)
     const [dropdownselected, setDropDownSelected] = useState(null)
     const [formatdate, setFormatDate] = useState([])
     const inputRef = useRef(null)
+    const userdata_temp = useContext(userMetadata);
 
     const toggleDropdown = () =>{
         setDropDown(!dropdown)
@@ -27,12 +30,17 @@ const FnFlistingsRender = ({navigation}) => {
 
     useEffect(()=>{
         if(fnfposts.length > 0){
-            const dates = fnfposts.map(post => ({
+            const dates = fnfposts.map(post => {
+                return{
                 ...post,
-                formattedDate: FormatReviewDate(post.reviews_created_at)
-            }));
-            setFormatDate(dates);
-    }},[fnfposts])
+                formattedDate: FormatReviewDate(post.reviews_created_at),
+                profilepic: (fnfusersimage.find(
+                    item => item.displayName === post.review_username) || {}).photoURL
+        }}); setFormatDate(dates)
+                
+            };
+            // setFormatDate(dates);
+    },[fnfposts])
 
     const onPressReviewHandler =(id)=>{
         navigation.navigate('DetailedListings', {id: id})
@@ -75,7 +83,7 @@ const FnFlistingsRender = ({navigation}) => {
         return(
             <View>
                 <View style={styles.postHeader}>
-                    <FontAwesome5 name="user-circle" size={24} color="black" />
+                    <Image source={{uri: item.profilepic}} style={styles.userPicStyle}></Image>
                     <Text style={styles.postHeaderTitle}>{item.review_username}</Text>
                     <MaterialCommunityIcons name="dots-horizontal" size={24} color="black" />
                 </View>
@@ -130,7 +138,9 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         justifyContent:'space-between',
         alignItems:'center',
-        padding:10,
+        paddingBottom:5,
+        paddingRight:10,
+        paddingLeft:10,
         borderBottomWidth:1,
         borderBottomColor:'lightgrey'
     },
@@ -159,6 +169,12 @@ const styles = StyleSheet.create({
         paddingLeft:5,
         paddingTop:3,
         paddingRight:285
+    },
+    userPicStyle:{
+        width: 30,
+        height: 30,
+        borderRadius: 20,
+        borderWidth: 5,
     },
     postcontainer:{
         width: '100%',
@@ -205,7 +221,6 @@ const styles = StyleSheet.create({
     },
     postIcons1:{
         paddingLeft:200,
-        flexDirection:'flex-enn',
     },
     postIconStyle1:{
         paddingLeft:10,

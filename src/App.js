@@ -15,6 +15,7 @@ import { Firebase_App } from './components/auth/firebaseconfig';
 import { Firebase_Auth } from './components/auth/firebaseconfig';
 import { onAuthStateChanged } from 'firebase/auth';
 import UserProvider from './components/userprofile/userprofile';
+import UserMetaDataProvider from './components/userprofile/usermetadata';
 import * as SystemUI from 'expo-system-ui';
 
 
@@ -45,8 +46,10 @@ export default function App() {
 
 
 
+
   return (
     <UserProvider>
+      <UserMetaDataProvider>  
       <NavigationContainer>
         <Stack.Navigator initialRouteName="LandingPage"
         screenOptions={{headerShown: false}}>
@@ -82,6 +85,7 @@ export default function App() {
           )}
         </Stack.Navigator>
       </NavigationContainer>
+      </UserMetaDataProvider>
       </UserProvider>
   );
 }
