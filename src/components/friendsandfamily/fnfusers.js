@@ -23,7 +23,9 @@ useEffect(() => {
                 ...docs.data(),
                 id: docs.id,
                 review_image_url: docs.data().review_image_url||[],
-                review_title: docs.data().review_title || "No Title"}))
+                review_title: docs.data().review_title || "No Title",
+                review_buy_or_not_buy: docs.data().review_buy_or_not_buy,
+                reviews_created_at: docs.data().reviews_created_at || ''}))
                 setLoading(false)
                 setFnfPosts(fnfreviews)
             }catch (error) {

@@ -5,7 +5,7 @@ import HomePage from '../Homepage/homepage';
 import Listings from '../Homepage/listings';
 import PostScreen from '../Createpage/postscreen';
 import CreatePost from '../Createpage/createpost';
-import FnFListingsrender from '../friendsandfamily/fnflistings';
+import FnFlistingsRender from '../friendsandfamily/fnflistings';
 import DetailedListings from './detailedlistings';
 import { createStackNavigator } from '@react-navigation/stack';
 import { List } from 'react-native-paper';
@@ -64,7 +64,7 @@ const MyTabs = ()=> {
       />
       <Tab.Screen
         name="Friends"
-        component={FnFListingsrender} 
+        component={FnFlistingsRender} 
         options={{
           tabBarLabel: 'Friends',
           tabBarIcon: ({ color }) => (

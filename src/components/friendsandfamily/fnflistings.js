@@ -1,97 +1,59 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { Component, useEffect, useRef, useState } from 'react'
 import { Text, View, StyleSheet, SafeAreaView, Image, FlatList, Touchable, TouchableOpacity,
             ScrollView, TextInput } from 'react-native'
-import { getDocs, collection } from 'firebase/firestore'
-import { Firebase_Auth, Firebase_db } from '../auth/firebaseconfig'
+
 import RNPickerSelect from 'react-native-picker-select';
-import { AntDesign } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
+import { Feather, AntDesign, FontAwesome5, MaterialIcons, MaterialCommunityIcons,
+        Ionicons } from '@expo/vector-icons';
 import HomePage from '../Homepage/homepage'
 import MyTabs from '../Homepage/bottomtabnavigator'
+import Listings from '../Homepage/listings';
 import DetailedListings from '../Homepage/detailedlistings'
 import MasonryList from '@react-native-seoul/masonry-list';
 import FetchFnF from './fnfusers';
-import { FontAwesome5 } from '@expo/vector-icons';
+import FormatReviewDate from './fetchDate';
+import {Picker} from '@react-native-picker/picker';
 
-
-
-const FnFListingsrender = ({navigation}) =>{
+const FnFlistingsRender = ({navigation}) => {
     const {fnfusers, fnfposts} = FetchFnF()
-    const [reviews, setReviews] = useState([])
-    const [selected, setSelected] = useState(null)
     const [dropdown, setDropDown] = useState(false)
-    
-
-    const renderReview = ({ item,index }) => {
-        const isFirstItem =index===0;
-        return(
-            <View style={styles.postContainer}>
-                <View style={styles.imageContainer}>
-                    <FontAwesome5 name="user-circle" size={24} color="black" />
-                    <Text style={styles.titleStyle1}>{item.review_username}</Text>
-                </View>
-                <TouchableOpacity 
-                onPress={()=>onPressReviewHandler(item.id)}
-                style={styles.itemcontainer}>
-                    <View style={styles.itemcontainer}>
-                        <Image source={{ uri: item.review_image_url[0] }} style={styles.imageStyle} />
-                        <View style={styles.textBox}>
-                            <Text style={styles.titleStyle} numberOfLines={3}>{item.review_title}</Text>
-                            <Text style={styles.titleStylecomments} numberOfLines={1}>View Comments</Text>
-                        </View>
-                        <View style={styles.commentContainer}>
-                                <FontAwesome5 name="comment-alt" size={23} color="black"
-                                style={styles.iconContainer} />
-                                <TextInput
-                                    style={styles.inputcomment}
-                                    placeholder=' Add a comment'
-                                    autoCapitalize='none'
-                                ></TextInput>
-                        </View>
-                    </View>
-                </TouchableOpacity>
-             </View>
-            
-        );
-                    
-                
-        
-    };
-    
-    const onPressBackHandler =() =>{
-        navigation.navigate('Home')
-    }
+    const [dropdownselected, setDropDownSelected] = useState(null)
+    const [formatdate, setFormatDate] = useState([])
+    const inputRef = useRef(null)
 
     const toggleDropdown = () =>{
         setDropDown(!dropdown)
     }
+
+    useEffect(()=>{
+        if(fnfposts.length > 0){
+            const dates = fnfposts.map(post => ({
+                ...post,
+                formattedDate: FormatReviewDate(post.reviews_created_at)
+            }));
+            setFormatDate(dates);
+    }},[fnfposts])
+
     const onPressReviewHandler =(id)=>{
         navigation.navigate('DetailedListings', {id: id})
     }
 
-    
-
-    return (
-        <View style={styles.container}>
-            <View style={styles.searchbar}>
-                <View style={styles.iconContainer}>
-                <AntDesign onPress={onPressBackHandler} name="arrowleft" size={24} color="black" />
-                </View>
-                <TextInput
-                    style={styles.input}
-                    placeholder='Search listing'
-                    autoCapitalize='none'
-                />
-                
-                <View style={styles.iconContainer}>
-                <Feather onPress={toggleDropdown} name="filter" size={24} color="black" />
-                </View>
+    const renderHeader = () => (
+        <>
+            <View style={styles.header}>
+                <MaterialIcons name="post-add" size={24} color="black" />
+                <Text style={styles.headerTitle}>Friends & Family</Text>
+                <MaterialCommunityIcons name="message-text-outline" size={22} color="black" />
             </View>
-                <View>
-                    <View style={styles.dropdown}>
-                        {dropdown && (
-                        <RNPickerSelect
-                        onValueChange = {(value)=>setSelected(value)}
+            <View style={styles.stories}>
+                <Text>Stories</Text>
+            </View>
+            <View style={styles.header}>
+                <Text style={styles.headerTitle}> Popular Reviews</Text>
+                {dropdown && (
+                    <RNPickerSelect
+                        placeholder={{label:'Select a Category', value:'Select a Category'}}
+                        onValueChange = {(value)=>setDropDownSelected(value)}
                         items = {[
                             {label:'Sofa & Couch' , value:'Sofa & Couch'},
                             {label:'TVs' , value:'TVs'},
@@ -99,161 +61,175 @@ const FnFListingsrender = ({navigation}) =>{
                             {label:'Others' , value:'Others'}
                         ]}
                         style={pickerSelectStyles}
-                        ></RNPickerSelect> 
-                         )}
-                    </View>
-                    <FlatList
-                            data={fnfposts}
-                            keyExtractor={item => item.id}
-                            renderItem={renderReview}
-                            numColumns={1} 
-                            contentContainerStyle={styles.boxcontainer}
-                            // columnWrapperStyle ={styles.columnWrapper}
-                    ></FlatList>   
-                </View>
-                 </View>
-                 )}
+                    ></RNPickerSelect> 
+                )}
+                <Feather onPress={toggleDropdown} name="filter" size={24} color="black" />
+            </View>
+        </>
+    );
 
-export default FnFListingsrender;
+    ;
+
+    
+    const renderReview = ({ item,index }) => {
+        return(
+            <View>
+                <View style={styles.postHeader}>
+                    <FontAwesome5 name="user-circle" size={24} color="black" />
+                    <Text style={styles.postHeaderTitle}>{item.review_username}</Text>
+                    <MaterialCommunityIcons name="dots-horizontal" size={24} color="black" />
+                </View>
+                <View style={styles.postcontainer}>
+                    <Image source={{ uri: item.review_image_url[0] }} style={styles.postimageStyle} />
+                        <View style={styles.postIconsContainer}>
+                            <FontAwesome5 name="heart" size={24} color="black" style={styles.postIconStyle}/>
+                            <FontAwesome5 name="comments" size={24} color="black" style={styles.postIconStyle} />
+                            <Ionicons name="share" size={24} color="black"style={styles.postIconStyle}/>
+                            { item.review_buy_or_not_buy ? 
+                                <View style={styles.postIcons1}>
+                                    <AntDesign name="like1" size={28} color="#F7A70B" style={styles.postIconStyle1}/>
+                                </View>:
+                                <View style={styles.postIcons1}>
+                                    <AntDesign name="dislike1" size={28} color="red" style={styles.postIconStyle1}/>
+                                </View>
+                            }
+                        </View>
+                        <TouchableOpacity onPress={()=> onPressReviewHandler(item.id)}>
+                            <View style={styles.postTextBox}>
+                                <Text style={styles.postTitleStyle} numberOfLines={3}>{item.review_title}</Text>
+                                <Text style={styles.postDescStyle} numberOfLines={2}>{item.review_content}</Text>
+                                <Text style={styles.postTitleStylecomments} numberOfLines={1}>View Comments</Text>
+                                <Text style={styles.postTitleStylecomments}>{item.formattedDate}</Text>
+                            </View>
+                        </TouchableOpacity>
+                </View>
+                
+            </View>
+        )
+    };
+    
+    return (
+        <SafeAreaView>
+                <FlatList
+                    ListHeaderComponent={renderHeader}
+                    data={formatdate}
+                    keyExtractor={item => item.id}
+                    renderItem={renderReview}
+                    numColumns={1} 
+                    contentContainerStyle={styles.boxcontainer}
+                ></FlatList> 
+        </SafeAreaView>
+    )};
+    
+
+
+export default FnFlistingsRender;
 
 const styles = StyleSheet.create({
-    container:{
-        width: '100%',
-        alignItems: 'stretch'
-        
+    header:{
+        flexDirection:'row',
+        justifyContent:'space-between',
+        alignItems:'center',
+        padding:10,
+        borderBottomWidth:1,
+        borderBottomColor:'lightgrey'
     },
-    boxcontainer:{
-        width: '100%',
-        backgroundColor: '#ffff',
-        
-        
+    headerTitle:{
+        fontSize:14,
+        fontWeight:'bold'
     },
-    input: {
-        
-        flex: 1,  
-        height: 40,
-        borderColor: '#F7A70B',
-        borderWidth: 2,
-        paddingLeft: 5,  
-        borderRadius: 4,
-        backgroundColor: '#ffff',
-        marginRight:5
-      },
-      inputcomment:{
-        flex: 1,  
-        marginRight:70,
-        height: 35,
-        borderColor: '#F7A70B',
-        borderWidth: 1,
-        marginLeft:5,
-        borderRadius: 4,
-        placeholderTextColor: '#800',
-        borderRadius:20
-      },
-    itemcontainer:{
+    stories:{
+        height:80,
+        flexDirection:'row',
+        padding:10,
+        borderBottomWidth:1,
+        borderBottomColor:'lightgrey'
+    },
+    // boxcontainer:{
+    //     width: '100%'
+    // },
+    postHeader:{
+        flexDirection:'row',
+        padding:10,
+        paddingRight:20,
+        justifyContent:'space-between',
+    },
+    postHeaderTitle:{
+        fontSize:14,
+        paddingLeft:5,
+        paddingTop:3,
+        paddingRight:285
+    },
+    postcontainer:{
         width: '100%',
         alignItems: 'center',
-        // flexWrap: 'wrap',
-        // // flexDirection: 'row',
-        // overflow: 'hidden',
         flexGrow:1,
         flexShrink:1
 
     },
-    imageStyle: {
+    postimageStyle: {
         width: '100%', 
         height: 250, 
         resizeMode: 'cover'
     },
-    titleStyle: {
+    postTitleStyle: {
         lineHeight:20,
-        justifyContent: 'center',
-        alignContent: 'center',
-        alignItems: 'center',
-        flex:1,
-        paddingLeft:5,
-        fontWeight: '600'
-  
+        fontWeight: '600',
+        paddingLeft:7
     },
-    titleStylecomments: {
+    postDescStyle: {
+        paddingLeft:7,
+        paddingBottom:5
+    },
+    postTitleStylecomments: {
         fontSize:12,
-        flex:1,
-        paddingLeft:5,
+        paddingLeft:7,
         paddingBottom:7
   
     },
-    
-    titleStyle1: {
-        lineHeight:20,
-        justifyContent: 'center',
-        alignContent: 'center',
-        alignItems: 'center',
-        flex:1,
-        paddingLeft:5
-  
-    },
-    textBox: {
+    postTextBox: {
         width: '100%',  
-        backgroundColor: '#ffffff',  
-        height: 50,
+        height: 100,
+        marginBottom:5
     },
-    columnWrapper: {
-        justifyContent: 'space-between', 
-    },
-    dropdown:{
-        width:'50%'
-    },
-    searchbar:{
-        flexDirection: 'row',  
-        alignItems: 'center',  
-        justifyContent: 'space-between',  
-        paddingHorizontal: 10,  
+    postIconsContainer: {
+        flexDirection: 'row',
         width: '100%', 
-        paddingTop:50
+        height:40
     },
-    iconContainer: {
-        flexDirection: 'row',
-        width: 30,  
-        justifyContent: 'space-between', 
-        paddingLeft:5,
-        paddingTop:5
-    },
-    imageContainer:{
-        width: '100%',
-        height:30,
-        flexDirection: 'row',
-        margin:3,
+    postIconStyle:{
+        paddingLeft:10,
         paddingTop:5,
+        paddingRight:10,
+        paddingBottom:5
+    },
+    postIcons1:{
+        paddingLeft:200,
+        flexDirection:'flex-enn',
+    },
+    postIconStyle1:{
+        paddingLeft:10,
+        paddingTop:5,
+        paddingRight:5,
+        paddingBottom:5
+    },
+    
 
-    
-    },
-    postContainer:{
-        width: '100%',
-        height: 380,
-        // overflow: 'hidden',
-        // flexGrow:1,
-        // flexShrink:1
-    
-    },
-    commentContainer:{
-        height: 40,
-        flexDirection: 'row',
-    }
     
 })
 
 const pickerSelectStyles = StyleSheet.create({
     inputIOS: {
         fontSize: 14,
-        paddingVertical: 12,
-        paddingHorizontal: 10,
-        paddingBottom:5,
-        marginBottom:5,
-        marginLeft:40,
-        borderWidth: 1,
-        borderColor: 'gray',
+        // paddingHorizontal: 10,
+        paddingBottom:3,
+        paddingTop:3,
+        // marginBottom:5,
+        // marginLeft:40,
+        borderWidth: 0.5,
+        borderColor: 'grey',
         borderRadius: 4,
-        color: 'black',
+        color: 'grey',
         paddingRight: 30, 
     },
     inputAndroid: {
@@ -266,4 +242,5 @@ const pickerSelectStyles = StyleSheet.create({
         color: 'black',
         paddingRight: 30, 
     },
-});
+})
+
