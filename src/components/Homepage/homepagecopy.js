@@ -78,6 +78,7 @@ const HomepageCopy = ({navigation}) => {
 
 
     return (
+        
         <SafeAreaView>
             <View style={styles.header}>
                 <View style={styles.headerLeft}>
@@ -228,9 +229,9 @@ const styles = StyleSheet.create({
     searchBar: {
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 0.7,
-        shadowRadius: 4,
-        elevation: 35,
+        shadowOpacity: 0.5,
+        shadowRadius: 3,
+        elevation: 20,
         flex: 1,  
         height: 40,
         borderColor: 'grey',
@@ -267,7 +268,7 @@ const styles = StyleSheet.create({
         width: 250,
         height: 250,
         backgroundColor: '#fff',
-        margin:5,
+        margin:2,
         shadowColor: 'lightgrey',
         flexWrap: 'wrap',
         flexDirection: 'row',

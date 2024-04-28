@@ -18,11 +18,20 @@ import UserProvider from './components/userprofile/userprofile';
 import UserMetaDataProvider from './components/userprofile/usermetadata';
 import * as SystemUI from 'expo-system-ui';
 import HighLevelCategoryProvider from './utilitycomponents/fetchcategories';
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+
 
 
 
 const Stack = createStackNavigator();
 
+const MyTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    notification: '#fff4b8',
+  },
+};
 
 
 
@@ -52,6 +61,7 @@ export default function App() {
     <UserProvider>
       <UserMetaDataProvider>  
       <HighLevelCategoryProvider>
+      <PaperProvider theme={MyTheme}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="LandingPage"
         screenOptions={{headerShown: false}}>
@@ -87,6 +97,7 @@ export default function App() {
           )}
         </Stack.Navigator>
       </NavigationContainer>
+      </PaperProvider>
       </HighLevelCategoryProvider>
       </UserMetaDataProvider>
       </UserProvider>

@@ -10,6 +10,9 @@ import DetailedListings from './detailedlistings';
 import { createStackNavigator } from '@react-navigation/stack';
 import { List } from 'react-native-paper';
 import { list } from 'firebase/storage';
+import { DefaultTheme, Provider as PaperProvider, useTheme } from 'react-native-paper';
+import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
+
 
 
 import ListingsCopy from './listingscopy';
@@ -20,7 +23,9 @@ import FetchCategories from '../../utilitycomponents/fetchcategories';
 const Tab = createMaterialBottomTabNavigator();
 const Listingsstack = createStackNavigator()
 
+
 const ListingsStackScreen =() =>{
+  
     return(
         <Listingsstack.Navigator screenOptions={{headerShown:false}}>
             <Listingsstack.Screen name = "Listings" component={Listings} screenOptions={{headerShown:false}}/>
@@ -29,13 +34,19 @@ const ListingsStackScreen =() =>{
     )
 }
 
+
 const MyTabs = ()=> {
+  const theme = useTheme();
+  theme.colors.secondaryContainer = "transparent"
+  theme.colors.tabBadge = '#fff4b8'
   return (
     <Tab.Navigator
       initialRouteName="Home"
       activeColor="#F7A70B"
       inactiveColor="#392B03"
-      barStyle={{ backgroundColor: '#ffff', height: 90 }}
+      shifting={true}
+      barStyle={{ backgroundColor: '#ffff', height: 90 }
+      }
     >
       <Tab.Screen
         name="Home"
@@ -45,6 +56,7 @@ const MyTabs = ()=> {
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="home" color={color} size={26} />
           ),
+          tabBarColor: '#ffff'
         }}
       />
       <Tab.Screen
@@ -53,7 +65,7 @@ const MyTabs = ()=> {
         options={{
           tabBarLabel: 'Listings',
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="format-list-bulleted" color={color} size={26} />
+            <Ionicons name="search-outline" size={24} color={color} />
           ),
         }}
       />
@@ -63,7 +75,7 @@ const MyTabs = ()=> {
         options={{
           tabBarLabel: 'Create',
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="plus-circle" color={color} size={26} />
+            <FontAwesome5 name="cart-plus" size={24} color={color} />
           ),
         }}
       />
@@ -73,7 +85,7 @@ const MyTabs = ()=> {
         options={{
           tabBarLabel: 'Friends',
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="account-multiple" color={color} size={26} />
+            <FontAwesome5 name="user-friends" size={23} color={color} />
           ),
         }}
       />
