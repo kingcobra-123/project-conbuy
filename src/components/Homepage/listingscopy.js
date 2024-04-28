@@ -107,40 +107,33 @@ const ListingsCopy = ({navigation, route}) => {
         const isFirstItem =index % 2 === 0;
         
         return(
-                        <View >
-                            <View style={isFirstItem?styles.postContainer1: styles.postContainer}>
-                                <ScrollView
-                                onScroll={updateIndex}
-                                showsHorizontalScrollIndicator={false} 
-                                horizontal 
-                                pagingEnabled
-                                scrollEventThrottle={16}
-                                style={styles.postImageContainer} >
-                                    {item.review_image_url.map((image, i) => {
-                                        return <Image source={{ uri: image }} key={i} style={styles.postImageStyle}
-                                        onError={(error) => console.log('Error loading image:', error)} />
+            <View >
+                <View style={isFirstItem?styles.postContainer1: styles.postContainer}>
+                    <ScrollView
+                        onScroll={updateIndex}
+                        showsHorizontalScrollIndicator={false} 
+                        horizontal 
+                        pagingEnabled
+                        scrollEventThrottle={16}
+                        style={styles.postImageContainer} >
+                            {item.review_image_url.map((image, i) => {
+                                 return <Image source={{ uri: image }} key={i} style={styles.postImageStyle}
+                                    onError={(error) => console.log('Error loading image:', error)} />
                                 })}
-                                
-                                </ScrollView>
-                                {renderPaginationDots(item.review_image_url.length, currentImageIndex)}
+                    </ScrollView>
+                        {renderPaginationDots(item.review_image_url.length, currentImageIndex)}
+                </View>
+                    <View style={styles.postTextBox}>
+                        <TouchableOpacity onPress={()=>onPressReviewHandler(item.id)} style={styles.postTextBox1} >
+                            <Text style={styles.postTitleStyle} numberOfLines={2}>{item.review_title}</Text>
+                            <View style={styles.postUserDetails}>
+                                    <Image source={{uri: item.reviewUserPhotoURL}} style={styles.userPicStyle}></Image>
+                                    <Text style={styles.postUserTitleStyle} numberOfLines={1}>{item.reviewUserDisplayName}</Text>
                             </View>
-                            
-                            <View style={styles.postTextBox}>
-                                <TouchableOpacity onPress={()=>onPressReviewHandler(item.id)} style={styles.postTextBox1} >
-                                    <Text style={styles.postTitleStyle} numberOfLines={2}>{item.review_title}</Text>
-                                    <View style={styles.postUserDetails}>
-                                        <Image source={{uri: item.reviewUserPhotoURL}} style={styles.userPicStyle}></Image>
-                                        <Text style={styles.postUserTitleStyle} numberOfLines={1}>{item.reviewUserDisplayName}</Text>
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    
-            
-        );
-                    
-                
-        
+                        </TouchableOpacity>
+                     </View>
+                </View>
+        ); 
     };
 
     return (
@@ -158,7 +151,7 @@ const ListingsCopy = ({navigation, route}) => {
                 <View style = {styles.headerpicker}>
                 <Feather onPress={toggleDropdown} name="filter" size={24} color="black" />
                     {dropdown && (
-                            <RNPickerSelect
+                         <RNPickerSelect
                             placeholder={{label:'Select a Category', value:'Select a Category'}}
                             onValueChange = {(value)=>setDropDownSelected(value)}
                             items = {[
@@ -168,9 +161,8 @@ const ListingsCopy = ({navigation, route}) => {
                                 {label:'Others' , value:'Others'}
                             ]}
                             style={pickerSelectStyles}
-                            ></RNPickerSelect> 
+                        ></RNPickerSelect> 
                             )}
-                    
                 </View>
             </View>
             <View style={styles.searchBarContainer}>

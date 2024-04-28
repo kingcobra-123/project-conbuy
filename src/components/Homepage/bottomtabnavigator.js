@@ -13,6 +13,8 @@ import { list } from 'firebase/storage';
 
 
 import ListingsCopy from './listingscopy';
+import HomepageCopy from './homepagecopy';
+import FetchCategories from '../../utilitycomponents/fetchcategories';
 
 
 const Tab = createMaterialBottomTabNavigator();
@@ -37,7 +39,7 @@ const MyTabs = ()=> {
     >
       <Tab.Screen
         name="Home"
-        component={HomePage}
+        component={HomepageCopy}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color }) => (
@@ -77,7 +79,7 @@ const MyTabs = ()=> {
       />
       <Tab.Screen
         name="Profile"
-        component={ListingsCopy} 
+        component={FetchCategories} 
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color }) => (

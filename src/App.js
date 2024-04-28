@@ -17,6 +17,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import UserProvider from './components/userprofile/userprofile';
 import UserMetaDataProvider from './components/userprofile/usermetadata';
 import * as SystemUI from 'expo-system-ui';
+import HighLevelCategoryProvider from './utilitycomponents/fetchcategories';
 
 
 
@@ -50,6 +51,7 @@ export default function App() {
   return (
     <UserProvider>
       <UserMetaDataProvider>  
+      <HighLevelCategoryProvider>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="LandingPage"
         screenOptions={{headerShown: false}}>
@@ -85,6 +87,7 @@ export default function App() {
           )}
         </Stack.Navigator>
       </NavigationContainer>
+      </HighLevelCategoryProvider>
       </UserMetaDataProvider>
       </UserProvider>
   );

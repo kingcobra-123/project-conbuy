@@ -7,6 +7,7 @@ import Carousel from 'react-native-snap-carousel';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { Video } from 'expo-av';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import ListingsCopy from './listingscopy';
 
 
 

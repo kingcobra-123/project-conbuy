@@ -19,14 +19,6 @@ import { Octicons } from '@expo/vector-icons';
 import fetchUserData from '../userprofile/userdata'
 
 
-const categories = ()=>{
-    
-    const[tv, setTV] =useState([]);
-    const[mattress, setMattress] = useState([]);
-    const[others, setOthers] = useState([]);
-
-}
-
 const HomePage =({navigation})=>{
 
     const[loading, setLoading] = useState(true);
