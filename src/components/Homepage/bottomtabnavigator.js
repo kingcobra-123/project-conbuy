@@ -17,7 +17,8 @@ import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 
 import ListingsCopy from './listingscopy';
 import HomepageCopy from './homepagecopy';
-import FetchCategories from '../../utilitycomponents/fetchcategories';
+import UserProfileHeader from '../user/userprofileheader';
+import UserProfileRender from '../user/userprofilerender';
 
 
 const Tab = createMaterialBottomTabNavigator();
@@ -63,7 +64,7 @@ const MyTabs = ()=> {
         name="Listings"
         component={ListingsCopy}
         options={{
-          tabBarLabel: 'Listings',
+          tabBarLabel: 'Discover',
           tabBarIcon: ({ color }) => (
             <Ionicons name="search-outline" size={24} color={color} />
           ),
@@ -91,7 +92,7 @@ const MyTabs = ()=> {
       />
       <Tab.Screen
         name="Profile"
-        component={FetchCategories} 
+        component={UserProfileRender} 
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color }) => (

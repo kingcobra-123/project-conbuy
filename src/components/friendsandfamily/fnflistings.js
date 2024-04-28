@@ -74,7 +74,7 @@ const FnFlistingsRender = ({navigation}) => {
                                 <Image source={{ uri: item}} key={index} style={styles.storiesImage} />
                             </TouchableOpacity>
                             )}>
-                        </FlatList>
+                </FlatList>
             </View>
             <View style={styles.header}>
                 <Text style={styles.headerTitle}> Popular Reviews</Text>

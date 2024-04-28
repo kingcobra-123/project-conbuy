@@ -9,6 +9,7 @@ import { Firebase_db } from '../auth/firebaseconfig';
 import DetailedListings from './detailedlistings';
 import { userMetadata } from '../userprofile/usermetadata';
 import { set } from 'firebase/database';
+import MasonryList from '@react-native-seoul/masonry-list';
 
 
 const ListingsCopy = ({navigation, route}) => {
