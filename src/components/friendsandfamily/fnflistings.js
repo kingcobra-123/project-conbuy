@@ -1,7 +1,6 @@
-import React, { Component, useEffect, useRef, useState, useContext } from 'react'
+import React, { Component, useEffect, useRef, useState, useContext, useMemo } from 'react'
 import { Text, View, StyleSheet, SafeAreaView, Image, FlatList, Touchable, TouchableOpacity,
             ScrollView, TextInput } from 'react-native'
-
 import RNPickerSelect from 'react-native-picker-select';
 import { Feather, AntDesign, FontAwesome5, MaterialIcons, MaterialCommunityIcons,
         Ionicons } from '@expo/vector-icons';
@@ -51,6 +50,11 @@ const FnFlistingsRender = ({navigation}) => {
         setCurrentImageIndex(index);
     };
 
+    const uniqueProfilePics = useMemo(() =>{
+        return Array.from(new Set(formatdate.map(
+            item => item.profilepic)));}, [formatdate]);
+    
+    
     const renderHeader = () => (
         <>
             <View style={styles.header}>
@@ -59,7 +63,18 @@ const FnFlistingsRender = ({navigation}) => {
                 <MaterialCommunityIcons name="message-text-outline" size={22} color="black" />
             </View>
             <View style={styles.stories}>
-                <Text>Stories</Text>
+                <FlatList
+                        scrollEventThrottle={16}
+                        data={uniqueProfilePics}
+                        horizontal = {true}
+                        showsHorizontalScrollIndicator= {false}
+                        keyExtractor={(item, index)=> index+item.toString()}
+                        renderItem={({item, index}) =>(
+                        <TouchableOpacity>
+                                <Image source={{ uri: item}} key={index} style={styles.storiesImage} />
+                            </TouchableOpacity>
+                            )}>
+                        </FlatList>
             </View>
             <View style={styles.header}>
                 <Text style={styles.headerTitle}> Popular Reviews</Text>
@@ -103,6 +118,7 @@ const FnFlistingsRender = ({navigation}) => {
                 <View >
                     <View style={styles.postcontainer}>
                         <ScrollView
+                            scrollEventThrottle={16}
                             onScroll={updateIndex}
                             showsHorizontalScrollIndicator={false} 
                             horizontal 
@@ -173,11 +189,19 @@ const styles = StyleSheet.create({
         fontWeight:'bold'
     },
     stories:{
-        height:80,
+        height:85,
         flexDirection:'row',
         padding:10,
         borderBottomWidth:1,
         borderBottomColor:'lightgrey'
+    },
+    storiesImage:{
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        marginRight: 10,
+        marginLeft: 10,
+        resizeMode: 'cover'
     },
     postHeader:{
         flexDirection:'row',

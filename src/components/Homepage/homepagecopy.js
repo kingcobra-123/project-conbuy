@@ -305,8 +305,7 @@ const styles = StyleSheet.create({
         paddingLeft:5,
         paddingTop:5,
         marginLeft:10,
-        paddingBottom:5
-        
+        paddingBottom:5    
     },
     flatListStory:{
         flexDirection: 'row',
