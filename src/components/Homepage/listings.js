@@ -6,7 +6,6 @@ import { Firebase_Auth, Firebase_db } from '../auth/firebaseconfig'
 import RNPickerSelect from 'react-native-picker-select';
 import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
-import HomePage from './homepage'
 import MyTabs from './bottomtabnavigator'
 import DetailedListings from './detailedlistings'
 import MasonryList from '@react-native-seoul/masonry-list';

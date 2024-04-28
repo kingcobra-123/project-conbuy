@@ -5,9 +5,11 @@ import { MaterialIcons, MaterialCommunityIcons, FontAwesome6, Octicons,
         Ionicons, EvilIcons, FontAwesome5 } from '@expo/vector-icons';
 import UserName from '../userprofile/username';
 import { collection, getDocs } from 'firebase/firestore';
-import { Firebase_db } from '../auth/firebaseconfig';
+import { Firebase_db, Firebase_Auth } from '../auth/firebaseconfig';
 import { ScrollView } from 'react-native-gesture-handler';
 import { highLevelCategories } from '../../utilitycomponents/fetchcategories';
+import { signOut } from 'firebase/auth';
+import Landingpage from '../auth/landingpage';
 
 
 import HighLevelCategoryProvider from '../../utilitycomponents/fetchcategories';
@@ -19,6 +21,8 @@ const HomepageCopy = ({navigation}) => {
 
     const highLevelCategory = useContext(highLevelCategories)
 
+    const [signOut1, setSignOut1] = useState(false)
+
     const[loading, setLoading] = useState(true);
     const[sofa, setSofa] =useState([]);
     const[tv, setTV] =useState([]);
@@ -27,6 +31,23 @@ const HomepageCopy = ({navigation}) => {
     const [selectedcategory, setSelectedCategory] = useState([]);
     const username = UserName();
     const user = username.toLowerCase();  
+
+
+    const logout = async() =>{
+        setSignOut1(true)
+        try{
+            const response = await signOut(Firebase_Auth);
+            setSignOut1(false)
+
+            if(response.user){
+                
+                navigation.replace('LandinPage')
+            }
+        } catch(error){
+            alert('Sign In Failed: '+ error.message)
+        } finally{
+            setSignOut1(false)}
+    }
 
 
     useEffect(()=>{
@@ -86,7 +107,8 @@ const HomepageCopy = ({navigation}) => {
                     <Text style={styles.headerTitle}>ConBuy!</Text>
                 </View>
                 <View style={styles.headerRight}>
-                    <FontAwesome5 name="user-circle" size={24} color="black" style={styles.headerIcon}/>
+                    <FontAwesome5 name="user-circle" size={24} color="black" style={styles.headerIcon}
+                    onPress={()=>logout()}/>
                     <Ionicons name="notifications-outline" size={26} color="black" style={styles.headerIcon}/>
                     <FontAwesome6 name="sack-dollar" size={22} color="black" style={styles.headerIcon}/>
                 </View>

@@ -4,7 +4,6 @@ import { StyleSheet, Text, View, useColorScheme} from 'react-native';
 import Landingpage from './components/auth/landingpage';
 import SignUp from './components/auth/signup';
 import SignIn from './components/auth/signin';
-import HomePage from './components/Homepage/homepage';
 import ForgetPassword from './components/auth/forgetpassword';
 import Listings from './components/Homepage/listings';
 import DetailedListings from './components/Homepage/detailedlistings';

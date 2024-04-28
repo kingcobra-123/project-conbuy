@@ -4,7 +4,6 @@ import { Text, View, StyleSheet, SafeAreaView, Image, FlatList, Touchable, Touch
 import RNPickerSelect from 'react-native-picker-select';
 import { Feather, AntDesign, FontAwesome5, MaterialIcons, MaterialCommunityIcons,
         Ionicons } from '@expo/vector-icons';
-import HomePage from '../Homepage/homepage'
 import MyTabs from '../Homepage/bottomtabnavigator'
 import Listings from '../Homepage/listings';
 import DetailedListings from '../Homepage/detailedlistings'

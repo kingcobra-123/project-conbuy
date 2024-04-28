@@ -5,7 +5,6 @@ import { Firebase_Auth } from './firebaseconfig'
 import {signInWithEmailAndPassword} from 'firebase/auth'
 import SignUp from './signup'
 import ForgetPassword from './forgetpassword'
-import HomePage from '../Homepage/homepage'
 
 function SignIn({navigation}) {
     const [email, setEmail] = useState('');
