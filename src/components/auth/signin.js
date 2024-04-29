@@ -1,3 +1,4 @@
+
 import React, {useState} from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, TextInput} from 'react-native'
 import { Firebase_App } from './firebaseconfig'
@@ -42,10 +43,11 @@ function SignIn({navigation}) {
         <Text style={styles.text1}> Conbuy!</Text>
         <Text style={styles.text2}>be REAL</Text>
         <Text style={styles.text3}>Welcome back!</Text>
-        <Text style={styles.text4}>Help your community in purchase decisions</Text>
+        <Text style={styles.text4}>Help your community</Text>
         <TextInput
         style={styles.input}
         placeholder='Email'
+        placeholderTextColor={'#57636C'}
         autoCapitalize='none'
         keyboardType='email-address'
         onChangeText={(text)=>setEmail(text)}
@@ -53,6 +55,7 @@ function SignIn({navigation}) {
         <TextInput
         style={styles.input}
         placeholder='Password'
+        placeholderTextColor={'#57636C'}
         secureTextEntry
         onChangeText={(text)=>setPassword(text)}
         ></TextInput>
@@ -75,7 +78,7 @@ function SignIn({navigation}) {
         </TouchableOpacity>
         <TouchableOpacity 
         onPress={onPressNoAccountHandler}>
-        <Text style={styles.text6}>Dont have an account?</Text>
+        <Text style={styles.text6}>Don't have an account?</Text>
         </TouchableOpacity>
 
     </View>
@@ -88,54 +91,63 @@ const styles = StyleSheet.create({
     container:{
         flex:1,
         alignItems: 'center',
+        justifyContent: 'center',
         backgroundColor: '#fff4b8'
     },
     text1: {
         paddingTop:100,
         fontSize:36,
         fontWeight: '600',
+        color: '#2F4858',
 
     },
     text2: {
-        fontSize:14
+        fontSize:14,
+        color: '#2F4858',
     },
     text3: {
         fontSize:16,
-        paddingTop:70,
-        fontWeight: '500'
+        paddingTop:35,
+        fontWeight: '500',
+        color: '#2F4858',
     },
     text4: {
         fontSize:12,
-        paddingBottom:30
+        paddingBottom:15,
+        color: '#2F4858',
     },
     text5: {
         fontSize:22,
-        fontWeight:'500'
+        fontWeight:'500', 
+        color: '#2F4858',
     },
     text6: {
         fontSize:16,
         paddingTop:8,
-        textDecorationLine: 'underline'
+        textDecorationLine: 'underline',
+        color: '#2F4858',
     },
     text7: {
         fontSize:16,
         paddingTop:8,
-        paddingBottom:5
+        paddingBottom:5,
+        color: '#2F4858',
     },
     text8: {
         fontSize:16,
-        fontWeight: '500'
+        fontWeight: '500',
+        color: '#2F4858',
     },
     input: {
         
         height: 50,
-        width: 300,
-        borderColor: '#F7A70B',
+        width: '70%',
+        borderColor: '#fffafa',
         borderWidth: 2,
         marginBottom: 16,
         padding: 8,
-        borderRadius: 4,
-        backgroundColor: '#ffff'
+        borderRadius: 50,
+        backgroundColor: '#fffafa'
       },
     
       button: {
@@ -143,7 +155,7 @@ const styles = StyleSheet.create({
         borderWidth:2,
         borderColor: '#F7A70B',
         borderRadius:30,
-        minWidth:160,
+        minWidth:'50%',
         height:45,
         alignItems: 'center',
         justifyContent: 'center',
@@ -156,7 +168,7 @@ const styles = StyleSheet.create({
         borderWidth:2,
         borderColor: '#F7A70B',
         borderRadius:30,
-        minWidth:300,
+        minWidth:'60%',
         height:45,
         alignItems: 'center',
         justifyContent: 'center',
