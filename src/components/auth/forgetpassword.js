@@ -12,11 +12,11 @@ const ForgetPassword = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-        <Text style={styles.text1}> Forget Password</Text>
-        <Text style={styles.text2}>We will send you an email with a link to reset your password, please enter the email associated with your account below.</Text>
+       <Text style={styles.text1}>Forget Password?</Text>
         <TextInput 
         style={styles.input}
-        placeholder='Email'></TextInput>
+        placeholder='Email'
+        placeholderTextColor={'#57636C'}></TextInput>
         <TouchableOpacity 
         style={styles.button}
         onPress={onPressHandler}> 
@@ -31,7 +31,8 @@ export default ForgetPassword
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor: '#fff4b8'
+        backgroundColor: '#fff4b8',
+        alignItems: 'center',
     },
     text1: {
         paddingTop:100,
@@ -39,13 +40,14 @@ const styles = StyleSheet.create({
         paddingLeft:10,
         fontSize:36,
         fontWeight: '600',
+        color:'#2F4858',
         
     },
     text2:{
         fontSize:16,
         flexShrink:1,
         textAlign:'justify',
-        
+        color: '#2F4858',
         paddingLeft:15,
         paddingRight:5
     },
@@ -55,20 +57,24 @@ const styles = StyleSheet.create({
         borderColor: '#F7A70B',
         borderRadius:30,
         height:45,
+        width:'50%',
         alignItems: 'center',
         justifyContent: 'center',
         textAlign: 'center',
         margin:10,
+        color: '#2F4858'
     },
     input: {
         margin:15,
         height: 50,
         width: 300,
-        borderColor: '#F7A70B',
+        borderColor: '#fffafa',
         borderWidth: 2,
         marginBottom: 16,
         padding: 8,
         borderRadius: 4,
-        backgroundColor: '#ffff'
+        backgroundColor: '#ffff',
+        borderRadius: 100,
+        backgroundColor: '#fffafa'
       },
 })
