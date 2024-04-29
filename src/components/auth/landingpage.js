@@ -13,43 +13,32 @@ const Stack = createStackNavigator();
 
 const Landingpage =({navigation}) => {
 
-    const onPressHandler = ()=>{
-        navigation.replace("SignUp Page")
-
-    }
-
-    return(
-        <View style={styles.container}>
-            <LinearGradient
-                colors={['#fff4b8', '#fff4b8']}
-                start={{x:0, y:1}}
-                end={{x:0, y:0}}
-                
-                style={styles.gradient}
-            >
-                <View style= {styles.container}>
-                    <Image 
-                        style= {styles.image}
-                        source={require('../../../assets/images/app-logo.png')}
-                    ></Image>
-                    <Text style= {styles.Text1}> ConBuy!</Text>
-                    <Text style= {styles.Text2}>Real Opinions! Real People! Real Rewards!</Text>
-                    <Text style = {styles.Text3}>Thanks for joining! Access or create your account below, and get started on your journey!</Text>
-                    
-                </View>
-            </LinearGradient>
-            <View style={styles.buttoncontainer}>
-                <TouchableOpacity 
-                    style = {styles.button}
-                    onPress={onPressHandler}
-                    >
-                    <Text style={styles.buttontext}>Get Started</Text>
-
-                </TouchableOpacity>
+        return (
+          <View style={styles.container}>
+            <Image
+              style={styles.image}
+              source={require('../../../assets/images/app-logo.png')}
+            />
+            <Text style={styles.heading}>Conbuy!</Text>
+            <Text style={styles.subheading}>be REAL</Text>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={[styles.button, styles.joinButton]}
+                onPress={() => navigation.navigate('SignUp Page')}
+              >
+                <Text style={styles.buttonText}>Join us</Text>
+              </TouchableOpacity>
+              <Text style={styles.orText}>or</Text>
+              <TouchableOpacity
+                style={[styles.button, styles.signInButton]}
+                onPress={() => navigation.navigate('SignIn')}
+              >
+                <Text style={styles.buttonText}>Sign in</Text>
+              </TouchableOpacity>
             </View>
-        </View>
-    )
-}
+          </View>
+        );
+      };
 export default Landingpage;
 
 
@@ -57,74 +46,58 @@ export default Landingpage;
 
 
 const styles = StyleSheet.create({
-    image:{
+     container: {
+      flex: 1,
+      backgroundColor: '#fff4b8',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    image: {
         width: 200,
-        height:162,
+        height: 162,
         resizeMode: 'contain',
-        
-    },
-    Text1: {
-       fontSize:28,
-       fontWeight:'bold',
-       paddingTop: 30,
-       paddingBottom:10
-       
-    },
-    Text2:{
-        fontSize:14,
-        fontWeight: 'bold',
-        alignItems: 'center'
-    },
-    Text3: {
-        fontSize: 14,
-        fontWeight: 'normal',
-        paddingHorizontal:44,
-        paddingTop: 8,
-        
-        textAlign: 'center'
-    },
-
-    container: {
-        flex: 1,
-        backgroundColor: '#fff4b8',
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingTop:50
-    
-        
       },
-    gradient:{
-       width: '100%',
-       height: '80%',
-       alignItems: 'center',
-       justifyContent: 'center'
-       
-        
-    },
-    buttoncontainer: {
-        flex:1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        alignContent: 'center',
-        
-        
-    },
+      heading: {
+        fontSize: 36,
+        fontWeight: 'bold',
+        marginTop: 30,
+        marginBottom: 10,
+        color:'#2F4858'
+      },
+      subheading: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        color:'#2F4858'
+      },
+
+      buttonContainer: {
+        marginTop: 30,
+      },
     button: {
-        backgroundColor: '#ffff',
-        borderWidth:2,
-        borderColor: '#F7A70B',
-        borderRadius:30,
-        minWidth:160,
-        height:50,
+        borderWidth: 2,
+        borderRadius: 30,
+        minWidth: 160,
+        height: 50,
         alignItems: 'center',
         justifyContent: 'center',
-        textAlign: 'center',
-        
-        
-    },
-    buttontext: {
+        marginVertical: 10,
+      },
+      joinButton: {
+        backgroundColor: '#F7A70B',
+        borderColor: '#F7A70B',
+      },
+      signInButton: {
+        backgroundColor: '#F7A70B',
+        borderColor: '#F7A70B',
+      },
+      buttonText: {
         fontSize: 16,
-        
-        textAlign: 'center'
-    }
+        fontWeight: 'bold',
+        color:'#2F4858'
+      },
+      orText: {
+        fontSize: 14,
+        color:'#2F4858',
+        textAlign:'center'
+      },
 })
