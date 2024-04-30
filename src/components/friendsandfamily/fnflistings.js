@@ -54,7 +54,8 @@ const FnFlistingsRender = ({navigation}) => {
             item => item.profilepic)));}, [formatdate]);
     
     
-    const renderHeader = () => (
+    const renderHeader =() => {
+        return(
         <>
             <View style={styles.header}>
                 <MaterialIcons name="post-add" size={24} color="black" />
@@ -93,7 +94,7 @@ const FnFlistingsRender = ({navigation}) => {
                 <Feather onPress={toggleDropdown} name="filter" size={24} color="black" />
             </View>
         </>
-    );
+        )};
 
     const renderPaginationDots = (item) => {
         return (
@@ -157,14 +158,14 @@ const FnFlistingsRender = ({navigation}) => {
     
     return (
         <SafeAreaView>
-                <FlatList
-                    ListHeaderComponent={renderHeader}
-                    data={formatdate}
-                    keyExtractor={item => item.id}
-                    renderItem={renderReview}
-                    numColumns={1} 
-                    contentContainerStyle={styles.boxcontainer}
-                ></FlatList> 
+                    <FlatList
+                        ListHeaderComponent={renderHeader()}
+                        data={formatdate}
+                        keyExtractor={item => item.id}
+                        renderItem={renderReview}
+                        numColumns={1} 
+                        contentContainerStyle={styles.boxcontainer}
+                    ></FlatList> 
         </SafeAreaView>
     )};
     

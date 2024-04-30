@@ -7,12 +7,10 @@ import { ScrollView } from 'react-native-gesture-handler'
 
 const UserProfileRender = () => {
     return (
-        <SafeAreaView>
         <ScrollView>
         <UserProfileHeader />
         <UserProfilePosts />
         </ScrollView>
-        </SafeAreaView>
     )
 }
 

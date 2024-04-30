@@ -89,7 +89,7 @@ const HomepageCopy = ({navigation}) => {
 
     const navigateToDetails = (item) => {
         if (selectedSofa) {
-            navigation.navigate('Listings', { title: item });
+            navigation.navigate('Create', { title: item });
         }
     };
 

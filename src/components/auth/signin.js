@@ -22,7 +22,7 @@ function SignIn({navigation}) {
 
             if(response.user){
                 
-                navigation.replace('HomePage')
+                navigation.replace('Home')
             }
         } catch(error){
             alert('Sign In Failed: '+ error.message)

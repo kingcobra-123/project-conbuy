@@ -16,8 +16,8 @@ import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 
 import ListingsCopy from './listingscopy';
 import HomepageCopy from './homepagecopy';
-import UserProfileHeader from '../user/userprofileheader';
 import UserProfileRender from '../user/userprofilerender';
+import SearchReviewsRender from '../searchreviews/searchreviewsrender';
 
 
 const Tab = createMaterialBottomTabNavigator();
@@ -28,8 +28,10 @@ const ListingsStackScreen =() =>{
   
     return(
         <Listingsstack.Navigator screenOptions={{headerShown:false}}>
-            <Listingsstack.Screen name = "Listings" component={Listings} screenOptions={{headerShown:false}}/>
+            <Listingsstack.Screen name = "Home" component={HomepageCopy} screenOptions={{headerShown:false}}/>
+            <Listingsstack.Screen name = "Listings" component={ListingsCopy} screenOptions={{headerShown:false}}/>
             <Listingsstack.Screen name = "DetailedListings" component = {DetailedListings} screenOptions={{headerShown:false}} />
+            <Listingsstack.Screen name = "PostScreen" component = {PostScreen} screenOptions={{headerShown:false}} />
         </Listingsstack.Navigator>
     )
 }
@@ -41,7 +43,7 @@ const MyTabs = ()=> {
   theme.colors.tabBadge = '#fff4b8'
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="homepage"
       activeColor="#F7A70B"
       inactiveColor="#392B03"
       shifting={true}
@@ -49,7 +51,7 @@ const MyTabs = ()=> {
       }
     >
       <Tab.Screen
-        name="Home"
+        name="homepage"
         component={HomepageCopy}
         options={{
           tabBarLabel: 'Home',
