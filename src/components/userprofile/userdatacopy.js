@@ -1,11 +1,8 @@
 import React, { Component, useContext, useEffect, useState } from 'react'
 import { SafeAreaView, Text, View } from 'react-native'
 import { Octicons } from '@expo/vector-icons';
-import { collection, getDocs } from 'firebase/firestore'
-import { Firebase_db } from '../auth/firebaseconfig'
 import UserName from './username';
 import { userMetadata } from './usermetadata';
-import { set } from 'firebase/database';
 
 const FetchUserData = () => {
     const [abfnfusers, setAbFnfUsers] = useState([])

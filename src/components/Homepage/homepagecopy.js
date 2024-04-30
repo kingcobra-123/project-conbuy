@@ -1,18 +1,13 @@
 import React, { Component, useState, useEffect, useContext  } from 'react'
 import { Text, View, StyleSheet, TextInput, FlatList, TouchableOpacity, Image} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { MaterialIcons, MaterialCommunityIcons, FontAwesome6, Octicons,
-        Ionicons, EvilIcons, FontAwesome5 } from '@expo/vector-icons';
+import {  FontAwesome6, Octicons,Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import UserName from '../userprofile/username';
 import { collection, getDocs } from 'firebase/firestore';
 import { Firebase_db, Firebase_Auth } from '../auth/firebaseconfig';
 import { ScrollView } from 'react-native-gesture-handler';
 import { highLevelCategories } from '../../utilitycomponents/fetchcategories';
 import { signOut } from 'firebase/auth';
-import Landingpage from '../auth/landingpage';
-
-
-import HighLevelCategoryProvider from '../../utilitycomponents/fetchcategories';
 
 
 

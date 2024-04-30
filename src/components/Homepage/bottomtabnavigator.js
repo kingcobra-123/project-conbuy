@@ -1,7 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Listings from '../Homepage/listings';
 import PostScreen from '../Createpage/postscreen';
 import CreatePost from '../Createpage/createpost';
 import FnFlistingsRender from '../friendsandfamily/fnflistings';
@@ -14,7 +13,6 @@ import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 
 
 
-import ListingsCopy from './listingscopy';
 import HomepageCopy from './homepagecopy';
 import UserProfileRender from '../user/userprofilerender';
 import SearchReviewsRender from '../searchreviews/searchreviewsrender';
@@ -29,7 +27,7 @@ const ListingsStackScreen =() =>{
     return(
         <Listingsstack.Navigator screenOptions={{headerShown:false}}>
             <Listingsstack.Screen name = "Home" component={HomepageCopy} screenOptions={{headerShown:false}}/>
-            <Listingsstack.Screen name = "Listings" component={ListingsCopy} screenOptions={{headerShown:false}}/>
+            <Listingsstack.Screen name = "Listings" component={SearchReviewsRender} screenOptions={{headerShown:false}} />
             <Listingsstack.Screen name = "DetailedListings" component = {DetailedListings} screenOptions={{headerShown:false}} />
             <Listingsstack.Screen name = "PostScreen" component = {PostScreen} screenOptions={{headerShown:false}} />
         </Listingsstack.Navigator>
@@ -63,7 +61,7 @@ const MyTabs = ()=> {
       />
       <Tab.Screen
         name="Listings"
-        component={ListingsCopy}
+        component={SearchReviewsRender}
         options={{
           tabBarLabel: 'Discover',
           tabBarIcon: ({ color }) => (

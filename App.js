@@ -1,23 +1,20 @@
 import { useEffect, useState, createContext, useContext } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, useColorScheme} from 'react-native';
-import Landingpage from './components/auth/landingpage';
-import SignUp from './components/auth/signup';
-import SignIn from './components/auth/signin';
-import ForgetPassword from './components/auth/forgetpassword';
-import Listings from './components/Homepage/listings';
-import DetailedListings from './components/Homepage/detailedlistings';
-import MyTabs from './components/Homepage/bottomtabnavigator';
+import Landingpage from './src/components/auth/landingpage';
+import SignUp from './src/components/auth/signup';
+import SignIn from './src/components/auth/signin';
+import ForgetPassword from './src/components/auth/forgetpassword';
+import MyTabs from './src/components/Homepage/bottomtabnavigator';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Firebase_App } from './components/auth/firebaseconfig';
-import { Firebase_Auth } from './components/auth/firebaseconfig';
+import { Firebase_Auth } from './src/components/auth/firebaseconfig';
 import { onAuthStateChanged } from 'firebase/auth';
-import UserProvider from './components/userprofile/userprofile';
-import UserMetaDataProvider from './components/userprofile/usermetadata';
-import * as SystemUI from 'expo-system-ui';
-import HighLevelCategoryProvider from './utilitycomponents/fetchcategories';
+import UserProvider from './src/components/userprofile/userprofile';
+import UserMetaDataProvider from './src/components/userprofile/usermetadata';
+import HighLevelCategoryProvider from './src/utilitycomponents/fetchcategories';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+
 
 
 

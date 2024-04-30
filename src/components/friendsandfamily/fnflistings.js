@@ -3,15 +3,9 @@ import { Text, View, StyleSheet, SafeAreaView, Image, FlatList, Touchable, Touch
             ScrollView, TextInput } from 'react-native'
 import RNPickerSelect from 'react-native-picker-select';
 import { Feather, AntDesign, FontAwesome5, MaterialIcons, MaterialCommunityIcons,
-        Ionicons } from '@expo/vector-icons';
-import MyTabs from '../Homepage/bottomtabnavigator'
-import Listings from '../Homepage/listings';
-import DetailedListings from '../Homepage/detailedlistings'
-import MasonryList from '@react-native-seoul/masonry-list';
+        Ionicons } from '@expo/vector-icons';  
 import FetchFnF from './fnfusers';
 import FormatReviewDate from './fetchDate';
-import {Picker} from '@react-native-picker/picker';
-import fetchUserData from '../userprofile/userdata';
 import { userMetadata } from '../userprofile/usermetadata';
 
 const FnFlistingsRender = ({navigation}) => {

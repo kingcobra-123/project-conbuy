@@ -1,12 +1,8 @@
 import React, { Component, useEffect, useState, useContext } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Firebase_Auth, Firebase_db } from '../auth/firebaseconfig';
 import { getDocs, collection, where, query } from 'firebase/firestore';
-import firebase from 'firebase/compat/app';
 import UserName from '../userprofile/username';
 import { userMetadata } from '../userprofile/usermetadata';
-import { set } from 'firebase/database';
+import { Firebase_db } from '../auth/firebaseconfig';
 
 const FetchFnF = () => {
     const [fnfusers, setFnfUsers] = useState([])

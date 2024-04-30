@@ -4,10 +4,8 @@ import MasonryList from '@react-native-seoul/masonry-list';
 import UserName from '../userprofile/username';
 import { Firebase_db } from '../auth/firebaseconfig';
 import { getDocs, collection, where, query } from 'firebase/firestore';
-import { set } from 'firebase/database';
 import { ScrollView } from 'react-native-gesture-handler';
 import { AntDesign } from '@expo/vector-icons';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 const UserProfilePosts = () => {
