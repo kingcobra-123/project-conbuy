@@ -26,7 +26,7 @@ const SearchReviewsHeader = ({updateTitle}) => {
 
 
     return (
-        <SafeAreaView style={{height:105}}>
+        <SafeAreaView style={{height:105, backgroundColor:'#fff4b8'}}>
             <View >
             <View style={styles.header}>
                 <Ionicons name="chevron-back" size={24} color="black" 

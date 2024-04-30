@@ -211,7 +211,8 @@ const styles = StyleSheet.create({
         paddingRight:10,
         paddingLeft:10,
         borderBottomWidth:1,
-        borderBottomColor:'lightgrey'
+        borderBottomColor:'lightgrey',
+        
     },
     headerTitle:{
         fontSize:24,

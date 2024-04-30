@@ -45,7 +45,7 @@ const MyTabs = ()=> {
       activeColor="#F7A70B"
       inactiveColor="#392B03"
       shifting={true}
-      barStyle={{ backgroundColor: '#ffff', height: 90 }
+      barStyle={{ backgroundColor: '#fff4b8', height: 90 }
       }
     >
       <Tab.Screen
