@@ -4,7 +4,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import PostScreen from '../Createpage/postscreen';
 import CreatePost from '../Createpage/createpost';
 import FnFlistingsRender from '../friendsandfamily/fnflistings';
-import DetailedListings from './detailedlistings';
 import { createStackNavigator } from '@react-navigation/stack';
 import { List } from 'react-native-paper';
 import { list } from 'firebase/storage';
@@ -17,6 +16,8 @@ import HomepageCopy from './homepagecopy';
 import UserProfileRender from '../user/userprofilerender';
 import SearchReviewsRender from '../searchreviews/searchreviewsrender';
 
+import ReviewContentRender from '../DetailsPage/reviewcontentrender';
+
 
 const Tab = createMaterialBottomTabNavigator();
 const Listingsstack = createStackNavigator()
@@ -26,10 +27,8 @@ const ListingsStackScreen =() =>{
   
     return(
         <Listingsstack.Navigator screenOptions={{headerShown:false}}>
-            <Listingsstack.Screen name = "Home" component={HomepageCopy} screenOptions={{headerShown:false}}/>
-            <Listingsstack.Screen name = "Listings" component={SearchReviewsRender} screenOptions={{headerShown:false}} />
-            <Listingsstack.Screen name = "DetailedListings" component = {DetailedListings} screenOptions={{headerShown:false}} />
-            <Listingsstack.Screen name = "PostScreen" component = {PostScreen} screenOptions={{headerShown:false}} />
+            <Listingsstack.Screen name = "searchreviews" component={SearchReviewsRender} screenOptions={{headerShown:false}} />
+            <Listingsstack.Screen name = "DetailedListings" component = {ReviewContentRender} screenOptions={{headerShown:false}} />
         </Listingsstack.Navigator>
     )
 }
@@ -45,7 +44,7 @@ const MyTabs = ()=> {
       activeColor="#F7A70B"
       inactiveColor="#392B03"
       shifting={true}
-      barStyle={{ backgroundColor: '#fff4b8', height: 90 }
+      barStyle={{ backgroundColor: 'white', height: 90 }
       }
     >
       <Tab.Screen
@@ -61,7 +60,7 @@ const MyTabs = ()=> {
       />
       <Tab.Screen
         name="Listings"
-        component={SearchReviewsRender}
+        component={ListingsStackScreen}
         options={{
           tabBarLabel: 'Discover',
           tabBarIcon: ({ color }) => (

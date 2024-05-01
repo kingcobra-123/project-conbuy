@@ -77,14 +77,14 @@ const HomepageCopy = ({navigation}) => {
     }, []);
 
     const onPressHandler = (item)=>{
-        setSelectedSofa(item)
+        setSelectedCategory(item)
         navigateToDetails(item)
 
     }
 
     const navigateToDetails = (item) => {
-        if (selectedSofa) {
-            navigation.navigate('Listings', { title: item });
+        if (selectedcategory) {
+            navigation.navigate('searchreviews', { title: item });
         }
     };
 
@@ -94,11 +94,10 @@ const HomepageCopy = ({navigation}) => {
 
 
     return (
-        
-        <SafeAreaView>
+        <SafeAreaView style={{height:'110%'}}>
             <View style={styles.header}>
                 <View style={styles.headerLeft}>
-                    <Octicons name="three-bars" size={24} color="black" style={styles.headerIcon}/>
+                    {/* <Octicons name="three-bars" size={24} color="black" style={styles.headerIcon}/> */}
                     <Text style={styles.headerTitle}>ConBuy!</Text>
                 </View>
                 <View style={styles.headerRight}>
@@ -166,7 +165,7 @@ const HomepageCopy = ({navigation}) => {
                         showsHorizontalScrollIndicator= {false}
                         keyExtractor={(item, index)=> index.toString()}
                         renderItem={({item, index}) =>(
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={()=> onPressHandler(item.name)}>
                         <View key={index} style={styles.categoryCard}>
                             <Image source={{ uri: item.photo_url }} style={styles.categoryCardImage} />
                             <Text style={styles.cardTitle}>{item.name}</Text>
@@ -186,7 +185,7 @@ const HomepageCopy = ({navigation}) => {
                         showsHorizontalScrollIndicator= {false}
                         keyExtractor={(item, index)=> index.toString()}
                         renderItem={({item, index}) =>(
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={()=> onPressHandler(item.name)}>
                         <View key={index} style={styles.categoryCard}>
                             <Image source={{ uri: item.photo_url }} style={styles.categoryCardImage} />
                             <Text style={styles.cardTitle}>{item.name}</Text>
@@ -212,6 +211,7 @@ const styles = StyleSheet.create({
         paddingLeft:10,
         borderBottomWidth:1,
         borderBottomColor:'lightgrey',
+        height:'5%'
         
     },
     headerTitle:{

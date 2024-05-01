@@ -1,11 +1,13 @@
 import React, { Component, useState, useEffect } from 'react'
 import { Text, View, ScrollView, Image, StyleSheet } from 'react-native'
 import MasonryList from '@react-native-seoul/masonry-list';
-
+import { useNavigation } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const SearchReviewsContent = ({data}) => {
 
+    const navigation = useNavigation();
     const [currentImageIndex, setCurrentImageIndex] = useState({});
     const data_temp = data;
 
@@ -38,6 +40,10 @@ const SearchReviewsContent = ({data}) => {
         updateIndex(id, index);
     };
 
+    const onPressReviewHandler = (id) => {
+        navigation.navigate('DetailedListings', {id: id})
+    };
+
         
 
     const renderReview = ({item, index}) => {
@@ -64,6 +70,7 @@ const SearchReviewsContent = ({data}) => {
                     borderBottomColor:'lightgrey'
                 }}>
                     {renderPaginationDots(item)}
+                    <TouchableOpacity onPress={()=>onPressReviewHandler(item.id)}>
                     <View style={{
                         flexDirection:'row', 
                         justifyContent: 'space-between',
@@ -87,6 +94,7 @@ const SearchReviewsContent = ({data}) => {
                         color: 'black',
                         padding: 5,
                     }}>{item.review_title}</Text>
+                    </TouchableOpacity>
                 </View>
                 </View>
             )

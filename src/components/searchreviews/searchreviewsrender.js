@@ -104,12 +104,16 @@ const SearchReviewsRender = () => {
 
 
     return (
-        <ScrollView>
-        <><SearchReviewsHeader  updateTitle={updateTitle}/> 
-        <SearchReviewsFilters updateFilter = {updateFilters}/> 
-        <SearchReviewsContent data = {reviewUserData}/>
+        <>
+        <View>
+            <SearchReviewsHeader  updateTitle={updateTitle}/> 
+            <SearchReviewsFilters updateFilter = {updateFilters}/> 
+            <ScrollView>
+                <SearchReviewsContent data = {reviewUserData}/>
+            </ScrollView>
+        </View>
         </>
-        </ScrollView>
+      
     )
 }
 

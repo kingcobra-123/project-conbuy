@@ -37,14 +37,14 @@ const SearchReviewsFilters = ({updateFilter}) => {
                                 mode = 'outlined' 
                                 icon={()=> <MaterialCommunityIcons name="sofa" size={24} color="black" />}
                                 onPress={(key)=>{handlePress('Sofa and Couch')}}
-                                style={[{backgroundColor:  (selectedfilter === 'Sofa and Couch')? '#F7A70B':'white'} ]}
+                                style={[{backgroundColor:  (selectedfilter === 'Sofa and Couch')? '#fff4b8':'white'} ]}
                                 >Sofa & Couch</Chip>
                             <Chip 
                                 key='mattress'
                                 mode = 'outlined'
                                 icon={()=><Ionicons name="bed" size={24} color="black" />}
                                 onPress={(key)=>{handlePress('Mattress')}}
-                                style={[{backgroundColor:  (selectedfilter === 'Mattress')? '#F7A70B':'white'} ]}
+                                style={[{backgroundColor:  (selectedfilter === 'Mattress')? '#fff4b8':'white'} ]}
                                 >Mattress</Chip>
                             <Chip
                                 key='tv'
