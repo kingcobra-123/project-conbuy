@@ -18,9 +18,10 @@ const SearchReviewsHeader = ({updateTitle}) => {
 
 
     const onPressBackHandler =() =>{
+        updateTitle('')
         navigation.navigate('homepage')
-        const random = Math.floor(Math.random() * 1000)
-        updateTitle(random)
+        
+        
     }
 
 
