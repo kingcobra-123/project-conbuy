@@ -9,6 +9,8 @@ import { List } from 'react-native-paper';
 import { list } from 'firebase/storage';
 import { DefaultTheme, Provider as PaperProvider, useTheme } from 'react-native-paper';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+
 
 
 
@@ -23,14 +25,25 @@ const Tab = createMaterialBottomTabNavigator();
 const Listingsstack = createStackNavigator()
 
 
-const ListingsStackScreen =() =>{
-  
-    return(
-        <Listingsstack.Navigator screenOptions={{headerShown:false}}>
-            <Listingsstack.Screen name = "searchreviews" component={SearchReviewsRender} screenOptions={{headerShown:false}} />
-            <Listingsstack.Screen name = "DetailedListings" component = {ReviewContentRender} screenOptions={{headerShown:false}} />
-        </Listingsstack.Navigator>
-    )
+const ListingsStackScreen = () => {
+  return (
+    <Listingsstack.Navigator screenOptions={{ headerShown: false }}>
+      <Listingsstack.Screen name="searchreviews" component={SearchReviewsRender}/>
+      <Listingsstack.Screen
+        name="DetailedListings"
+        component={ReviewContentRender}
+        options={({ route, navigation }) => ({
+          tabBarStyle: { display: getTabBarVisibility(route, navigation) ? 'none' : 'flex' },
+        })}
+      />
+    </Listingsstack.Navigator>
+  );
+}
+function getTabBarVisibility(route, navigation) {
+  // Assume the 'Details' screen shouldn't show the tab bar
+  const routeName = getFocusedRouteNameFromRoute(route) ?? '';
+  return routeName === 'DetailedListings';
+  console.log(routeName)
 }
 
 

@@ -84,7 +84,7 @@ const HomepageCopy = ({navigation}) => {
 
     const navigateToDetails = (item) => {
         if (selectedcategory) {
-            navigation.navigate('searchreviews', { title: item });
+            navigation.navigate('Listings', { screen: 'searchreviews', params: { title: item } });
         }
     };
 

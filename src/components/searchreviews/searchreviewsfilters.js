@@ -5,7 +5,7 @@ import { Chip } from 'react-native-paper';
 import { Ionicons,MaterialCommunityIcons, FontAwesome6, Foundation } from '@expo/vector-icons';
 
 const SearchReviewsFilters = ({updateFilter}) => {
-    const [selectedfilter, setSelectedFilter] = useState('')
+    const [selectedfilter, setSelectedFilter] = useState('Sofa')
 
 
 
