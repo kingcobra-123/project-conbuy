@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
         paddingTop:5,
         borderBottomWidth:1,
         borderBottomColor:'lightgrey',
-        backgroundColor: '#E9ECEF',
+        // backgroundColor: '#E9ECEF',
         height: 50
     },
     profilePic:{

@@ -22,7 +22,6 @@ import HomepageCopy from './homepagecopy';
 import UserProfileRender from '../user/userprofilerender';
 import SearchReviewsRender from '../searchreviews/searchreviewsrender';
 import CreateReviewRender from '../createreview/createreviewrender';
-import Uploading from '../createreview/utilities/uploadingtext';
 
 
 import ReviewContentRender from '../DetailsPage/reviewcontentrender';

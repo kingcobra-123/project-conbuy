@@ -1,16 +1,25 @@
-import React, { Component, useContext, useState } from 'react'
-import { Text, View, SafeAreaView, StyleSheet, TouchableOpacity, Image } from 'react-native'
+import React, { Component, useContext, useState, useEffect } from 'react'
+import { Text, View, SafeAreaView, StyleSheet, TouchableOpacity, Image, Dimensions } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { userMetadata } from '../userprofile/usermetadata';
 import SelectDropdown from 'react-native-select-dropdown'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import {FontAwesome, FontAwesome5} from '@expo/vector-icons/FontAwesome';
+import { useIsFocused } from '@react-navigation/native';
+import Animated, {
+    useSharedValue,
+    useAnimatedStyle,
+    withSpring,
+    withTiming,
+    withSequence,
+    FadeIn,
+  } from 'react-native-reanimated';
 
 
 
 
 
-
+  const { width, height } = Dimensions.get('window');
 
 const CreateReviewHeader = ({openUploadModal, handleUpload, handleUploadData}) => {
 
@@ -19,6 +28,25 @@ const CreateReviewHeader = ({openUploadModal, handleUpload, handleUploadData}) =
         openUploadModal();
         handleUploadData();
     };
+
+    
+       
+    const isFocused = useIsFocused();  
+    const scale = useSharedValue(1);
+    const animatedStyles = useAnimatedStyle(() => {
+        return {
+            transform: [{ scale: scale.value }],
+        };
+    });
+
+    useEffect(() => {
+        if (isFocused) {
+            scale.value = withSequence(
+                withTiming(8, { duration: 250 }),  
+                withSpring(0.8) 
+            );
+        }
+    }, [isFocused]);
   
 
 
@@ -31,9 +59,13 @@ const CreateReviewHeader = ({openUploadModal, handleUpload, handleUploadData}) =
                     <TouchableOpacity  
                     style={styles.postButton}
                     onPress={()=>handleSharePress()}>
-                        <Image
+                        <Animated.Image 
+                            style={[animatedStyles, styles.image]} 
+                            source={require('../../../assets/images/app-logo.png')}
+                            entering={FadeIn}/>
+                        {/* <Image
                             style={styles.image}
-                            source={require('../../../assets/images/app-logo.png')}/>
+                            source={require('../../../assets/images/app-logo.png')}/> */}
                             <Text style={{paddingRight:5}}>Share</Text>
                 </TouchableOpacity>  
             </View>
