@@ -14,6 +14,7 @@ import UserProvider from './src/components/userprofile/userprofile';
 import UserMetaDataProvider from './src/components/userprofile/usermetadata';
 import HighLevelCategoryProvider from './src/utilitycomponents/fetchcategories';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import ListingsStackScreen from './src/components/Homepage/bottomtabnavigator';
 
 
 

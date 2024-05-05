@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import PostScreen from '../Createpage/postscreen';
+// import PostScreen from '../Createpage/postscreen';
 import CreatePost from '../Createpage/createpost';
 import FnFlistingsRender from '../friendsandfamily/fnflistings';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -10,13 +10,20 @@ import { list } from 'firebase/storage';
 import { DefaultTheme, Provider as PaperProvider, useTheme } from 'react-native-paper';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import { useEffect, useRef } from 'react';
 
 
 
+
+
+import React, {useLayoutEffect} from 'react';
 
 import HomepageCopy from './homepagecopy';
 import UserProfileRender from '../user/userprofilerender';
 import SearchReviewsRender from '../searchreviews/searchreviewsrender';
+import CreateReviewRender from '../createreview/createreviewrender';
+import Uploading from '../createreview/utilities/uploadingtext';
+
 
 import ReviewContentRender from '../DetailsPage/reviewcontentrender';
 
@@ -25,7 +32,9 @@ const Tab = createMaterialBottomTabNavigator();
 const Listingsstack = createStackNavigator()
 
 
-const ListingsStackScreen = () => {
+const ListingsStackScreen = ({navigation,route}) => {
+
+  
   return (
     <Listingsstack.Navigator screenOptions={{ headerShown: false }}>
       <Listingsstack.Screen name="searchreviews" component={SearchReviewsRender}/>
@@ -33,22 +42,20 @@ const ListingsStackScreen = () => {
         name="DetailedListings"
         component={ReviewContentRender}
         options={({ route, navigation }) => ({
-          tabBarStyle: { display: getTabBarVisibility(route, navigation) ? 'none' : 'flex' },
+          tabBarStyle: { display: 'none' },
         })}
       />
     </Listingsstack.Navigator>
-  );
-}
-function getTabBarVisibility(route, navigation) {
-  // Assume the 'Details' screen shouldn't show the tab bar
-  const routeName = getFocusedRouteNameFromRoute(route) ?? '';
-  return routeName === 'DetailedListings';
-  console.log(routeName)
-}
+  )};
+
 
 
 const MyTabs = ()=> {
+
   const theme = useTheme();
+  
+
+  
   theme.colors.secondaryContainer = "transparent"
   theme.colors.tabBadge = '#fff4b8'
   return (
@@ -83,7 +90,7 @@ const MyTabs = ()=> {
       />
       <Tab.Screen
         name="Create"
-        component={PostScreen} 
+        component={CreateReviewRender} 
         options={{
           tabBarLabel: 'Create',
           tabBarIcon: ({ color }) => (
@@ -109,6 +116,7 @@ const MyTabs = ()=> {
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="account-circle" color={color} size={26} />
           ),
+          
         }}
       />
     </Tab.Navigator>
