@@ -34,14 +34,11 @@ const CreateReviewUserDetails = () => {
                             renderButton={(selectedItem, isOpened) => {
                                         return (
                                             <View style={styles.dropdownButtonStyle}>
-                                            {selectedItem && (
                                                 <Icon name={selectedItem? selectedItem.icon:'globe-americas' } style={styles.dropdownButtonIconStyle} />
-                                            )}
-                                            
-                                            <Text style={styles.dropdownButtonTxtStyle}>
-                                                {selectedItem? selectedItem.title : 'Public'}
-                                            </Text>
-                                            <Icon name={isOpened ? 'chevron-up' : 'chevron-down'} style={styles.dropdownButtonArrowStyle} />
+                                               <Text style={styles.dropdownButtonTxtStyle}>
+                                                    {selectedItem? selectedItem.title : 'Public'}
+                                              </Text>
+                                              <Icon name={isOpened ? 'chevron-up' : 'chevron-down'} style={styles.dropdownButtonArrowStyle} />
                                             </View>
                                         );
                                         }}
