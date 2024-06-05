@@ -92,17 +92,15 @@ export const login = async (req, res) => {
 }
 
 export const getCategories = async (req, res) => {
-  try{
+  console.log("Fetching categories");
+  try {
     const categories = await Category.find();
     const formattedCategories = categories.flat();
-   
-
-
+    console.log("Categories: ", formattedCategories);
 
     res.status(200).json(formattedCategories);
-
   } catch (error) {
-    console.log('Error fetching categories: ', error);
+    console.log("Error fetching categories: ", error);
     res.status(500).json({ message: error.message });
   }
 };
