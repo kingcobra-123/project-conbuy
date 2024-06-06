@@ -56,6 +56,11 @@ app.use('/auth', authRoutes);
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 
+// Generic welcome route
+app.get('/', (req, res) => {
+  res.send('Welcome to Conbuy Backend');
+});
+
 // Mongoose setup
 
 const PORT = process.env.PORT || 3000;
