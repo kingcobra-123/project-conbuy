@@ -2,7 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "description": "conbuy_backend_test",
-  "main": "index.js",
+  "main": "server/index.js",
   "type": "module",
   "scripts": {
     "start": "node server/index.js",
