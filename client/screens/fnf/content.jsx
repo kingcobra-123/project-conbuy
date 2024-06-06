@@ -14,6 +14,7 @@ import {
 import { useIsFocused } from "@react-navigation/native";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import API_BASE_URL from "../../apiconfig";
 
 const FnFContent = () => {
   const [dropdown, setDropDown] = useState(false);
@@ -42,11 +43,11 @@ const FnFContent = () => {
             },
           };
           const response = await axios.get(
-            `http://localhost:3001/posts/${id}/friends`,
+            `${API_BASE_URL}/posts/${id}/friends`,
             config
           );
           const userFriends = await axios.get(
-            `http://localhost:3001/users/${id}/friends`,
+            `${API_BASE_URL}/users/${id}/friends`,
             config
           );
           setUserFriends(userFriends.data);

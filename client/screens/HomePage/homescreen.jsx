@@ -16,6 +16,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setLogout } from "../../state";
 import { useNavigation } from "@react-navigation/native";
+import API_BASE_URL from "../../apiconfig";
 
 const HomeScreen = () => {
   const [highLevelCategory, setHighLevelCategory] = useState([]);
@@ -40,9 +41,7 @@ const HomeScreen = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3001/auth/categories"
-        );
+        const response = await axios.get(`${API_BASE_URL}/auth/categories`);
         const data = response.data;
 
         const highLevelCategoryData = data.map((category) => ({

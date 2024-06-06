@@ -5,6 +5,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { AntDesign } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import API_BASE_URL from "../../apiconfig";
 
 const UserProfilePosts = () => {
   const user = useSelector((state) => state.user);
@@ -25,7 +26,7 @@ const UserProfilePosts = () => {
         };
         const userId = user._id;
         const response = await axios.get(
-          `http://localhost:3001/posts/${userId}`,
+          `${API_BASE_URL}/posts/${userId}`,
           config
         );
         setUserPosts(response.data);

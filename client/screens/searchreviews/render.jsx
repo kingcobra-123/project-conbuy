@@ -8,6 +8,7 @@ import { useState, useEffect, useContext } from "react";
 import { useRoute } from "@react-navigation/native";
 import axios from "axios";
 import { useInfiniteQuery } from "react-query";
+import API_BASE_URL from "../../apiconfig";
 
 const SearchReviewRender = () => {
   const route = useRoute();
@@ -112,7 +113,7 @@ const SearchReviewRender = () => {
   };
 
   useEffect(() => {
-    fetchData("http://localhost:3001/posts?page=1&limit=8");
+    fetchData(`${API_BASE_URL}/posts?page=1&limit=8`);
   }, []);
 
   return (
