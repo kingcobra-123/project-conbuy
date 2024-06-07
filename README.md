@@ -24,9 +24,8 @@ ConBuy is a comprehensive platform designed to enhance consumer purchasing decis
   - `patches`: Patch files for dependencies.
   - `screens`: React Native screens.
   - `state`: State management files.
-  - `temp`: Temporary files.
+  - `temp`: Temporary scripts.
   - **Main Files**:
-    - `.gitignore`
     - `App.js`
     - `apiconfig.js`
     - `app.json`
@@ -38,13 +37,11 @@ ConBuy is a comprehensive platform designed to enhance consumer purchasing decis
     
 - **server**: Backend code.
   - `controllers`: Request handlers.
-  - `data`: Data-related files and scripts.
+  - `data`: Data-related files and scripts for initial run.
   - `middleware`: Middleware functions.
   - `models`: Database models.
   - `routes`: API routes.
   - **Main Files**:
-    - `.env`
-    - `.gitignore`
     - `index.js`
     - `package-lock.json`
     - `package.json`
@@ -60,7 +57,7 @@ ConBuy is a comprehensive platform designed to enhance consumer purchasing decis
 ### Steps
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/project-conbuy.git
+   git clone https://github.com/kingcobra-123/project-conbuy.git
    cd project-conbuy
 
 2. Install dependencies for both client and server:
