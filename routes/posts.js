@@ -17,6 +17,7 @@ const router = express.Router();
 router.get("/", paginatedResults(Post), getFeedPosts);
 router.get("/:userId", verifyToken, getUserPosts);
 router.get("/:id/friends", verifyToken, getFriendPosts);
+router.get("/:id", verifyToken, getPost);
 
 // Update Routes
 router.patch("/:id/like", verifyToken, likePost);
