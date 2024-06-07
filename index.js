@@ -61,7 +61,7 @@ app.get('/', (req, res) => {
   res.send('Welcome to Conbuy Backend');
 });
 
-// Mongoose setup
+// Mongoose setup...
 
 const PORT = process.env.PORT || 3000;
 mongoose
