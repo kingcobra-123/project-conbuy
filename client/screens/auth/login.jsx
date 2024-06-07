@@ -11,12 +11,14 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
 import { setLogIn } from "../../state";
+import API_BASE_URL from "../../apiconfig";
 
 function SignIn({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const url = `http://localhost:3001/auth/login`;
 
   const handleLogIn = async () => {
     const user = {
@@ -24,10 +26,7 @@ function SignIn({ navigation }) {
       password: password,
     };
     try {
-      const response = await axios.post(
-        "http://localhost:3001/auth/login",
-        user
-      );
+      const response = await axios.post(url, user);
       dispatch(
         setLogIn({
           user: response.data.user,
@@ -36,7 +35,7 @@ function SignIn({ navigation }) {
       );
       navigation.replace("Home");
     } catch (error) {
-      console.log("Login", error);
+      console.log("Login", error.message);
       alert("Login Failed: " + error.message);
     }
   };

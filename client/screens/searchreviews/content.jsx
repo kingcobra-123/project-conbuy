@@ -75,7 +75,7 @@ const SearchReviewsContent = ({ data, handleLoadNextPage }) => {
           }}
         >
           {renderPaginationDots(item)}
-          <TouchableOpacity onPress={() => onPressReviewHandler(item.id)}>
+          <TouchableOpacity onPress={() => onPressReviewHandler(item._id)}>
             <View
               style={{
                 flexDirection: "row",

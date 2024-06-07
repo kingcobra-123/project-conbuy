@@ -12,9 +12,30 @@ import CreateReviewRender from "../screens/createreview/createreviewrender";
 import FnFListingsRender from "../screens/fnf/render";
 import UserProfileRender from "../screens/userprofile/render";
 import FnFContent from "../screens/fnf/content";
+import ReviewContentRender from "../screens/reviewdetails/render";
 import { useTheme } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 
 const Tab = createMaterialBottomTabNavigator();
+const ListingsStack = createStackNavigator();
+
+const ListingsStackScreen = ({ navigation, route }) => {
+  return (
+    <ListingsStack.Navigator screenOptions={{ headerShown: false }}>
+      <ListingsStack.Screen
+        name="searchreviews"
+        component={SearchReviewRender}
+      />
+      <ListingsStack.Screen
+        name="DetailedListings"
+        component={ReviewContentRender}
+        options={({ route, navigation }) => ({
+          tabBarStyle: { display: "none" },
+        })}
+      />
+    </ListingsStack.Navigator>
+  );
+};
 
 const BottomTabNavigator = () => {
   const theme = useTheme();
@@ -40,7 +61,7 @@ const BottomTabNavigator = () => {
       />
       <Tab.Screen
         name="Listings"
-        component={SearchReviewRender}
+        component={ListingsStackScreen}
         options={{
           tabBarLabel: "Discover",
           tabBarIcon: ({ color }) => (

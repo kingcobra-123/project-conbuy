@@ -43,7 +43,7 @@ const FnFContent = () => {
             },
           };
           const response = await axios.get(
-            `${API_BASE_URL}/posts/${id}/friends`,
+            `http://localhost:3001/posts/${id}/friends`,
             config
           );
           const userFriends = await axios.get(

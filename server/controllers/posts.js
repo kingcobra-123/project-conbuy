@@ -54,116 +54,122 @@ export const createPost = async (req, res) => {
 // Read Post
 
 export const getFeedPosts = (req, res) => {
-    console.log(JSON.stringify(res.paginatedResults, null, 2) );
-    const updatedPosts = res.paginatedResults.results.map((post) => ({
-      _id: post._id,
-      userId: post.userId,
-      description: post.description,
-      content: post.content,
-      picturePath: post.picturePath,
-      videoPath: post.videoPath,
-      category: post.category,
-      subCategory: post.subCategory,
-      purchaseLink: post.purchaseLink,
-      purchaseDate: post.purchaseDate,
-      buyOrNotBuy: post.buyOrNotBuy,
-      likes: post.likes,
-      imageHeight: Math.floor(Math.random() * 100) + 200,
-    }));
+  const updatedPosts = res.paginatedResults.results.map((post) => ({
+    _id: post._id,
+    userId: post.userId,
+    description: post.description,
+    content: post.content,
+    picturePath: post.picturePath,
+    videoPath: post.videoPath,
+    category: post.category,
+    subCategory: post.subCategory,
+    purchaseLink: post.purchaseLink,
+    purchaseDate: post.purchaseDate,
+    buyOrNotBuy: post.buyOrNotBuy,
+    likes: post.likes,
+    imageHeight: Math.floor(Math.random() * 100) + 200,
+  }));
 
-    res.json(res.paginatedResults);
+  res.json(res.paginatedResults);
 
-    // try {
+  // try {
 
-    //     const posts = await Post.find();
-    //     res.status(200).json(posts);
+  //     const posts = await Post.find();
+  //     res.status(200).json(posts);
 
-    // } catch (error) {
-    //     res.status(404).json({ message: error.message });
-    // }
-}
+  // } catch (error) {
+  //     res.status(404).json({ message: error.message });
+  // }
+};
 
 // Read User Posts
 export const getUserPosts = async (req, res) => {
-    try{
-        
-        const { userId } = req.params;
-        const posts = await Post.find({ userId });
-        const updatedPosts = posts.map((post) => {
-            return {
-                _id: post._id,
-                userId: post.userId,
-                description: post.description,
-                content: post.content,
-                picturePath: post.picturePath,
-                videoPath: post.videoPath,
-                category: post.category,
-                subCategory: post.subCategory,
-                purchaseLink: post.purchaseLink,
-                purchaseDate: post.purchaseDate,
-                buyOrNotBuy: post.buyOrNotBuy,
-                likes: post.likes,
-                imageHeight: Math.floor(Math.random() * 100) + 200,
-            };
-           
-        });
-         
+  try {
+    const { userId } = req.params;
+    const posts = await Post.find({ userId });
+    const updatedPosts = posts.map((post) => {
+      return {
+        _id: post._id,
+        userId: post.userId,
+        description: post.description,
+        content: post.content,
+        picturePath: post.picturePath,
+        videoPath: post.videoPath,
+        category: post.category,
+        subCategory: post.subCategory,
+        purchaseLink: post.purchaseLink,
+        purchaseDate: post.purchaseDate,
+        buyOrNotBuy: post.buyOrNotBuy,
+        likes: post.likes,
+        imageHeight: Math.floor(Math.random() * 100) + 200,
+      };
+    });
 
-        console.log(updatedPosts);
-        res.status(200).json(updatedPosts);
-
-
-    } catch (error) {
-        res.status(404).json({ message: error.message });
-    }
-}
+    res.status(200).json(updatedPosts);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
 
 // like Post
 export const likePost = async (req, res) => {
-    try {
-
-        const { id } = req.params;
-        const { userId } = req.body;
-        const post = await Post.findById(id);
-        const isLiked = post.likes.get(userId);
-        if (isLiked) {
-            post.likes.delete(userId);
-        } else {
-            post.likes.set(userId, true);
-        }
-        const updatedPost = await Post.findByIdAndUpdate(
-            id,
-            { likes: post.likes },
-            { new: true }
-        );
-        res.status(200).json(updatedPost);
-    } catch (error) {
-        res.status(404).json({ message: error.message });
+  try {
+    const { id } = req.params;
+    const { userId } = req.body;
+    const post = await Post.findById(id);
+    const isLiked = post.likes.get(userId);
+    if (isLiked) {
+      post.likes.delete(userId);
+    } else {
+      post.likes.set(userId, true);
     }
-}
+    const updatedPost = await Post.findByIdAndUpdate(
+      id,
+      { likes: post.likes },
+      { new: true }
+    );
+    res.status(200).json(updatedPost);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
 
 // get Friend Posts
 
 export const getFriendPosts = async (req, res) => {
+  console.log("getFriendPosts");
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+    const friends = await Promise.all(
+      user.friends.map((friendId) => {
+        return User.findById(friendId);
+      })
+    );
 
-    try {
-        const { id } = req.params;
-        const user = await User.findById(id);
-        const friends = await Promise.all(
-          user.friends.map((friendId) => {
-            return User.findById(friendId);
-          })
-        );
-        
-        const posts = await Post.find();
+    const posts = await Post.find();
 
-        const friendsIDs = friends.map((friend) => friend._id.toString());
-        const friendsPosts = posts.filter((post) => friendsIDs.includes(post.userId.toString()));
-        
-        res.status(200).json(friendsPosts);
+    const friendsIDs = friends.map((friend) => friend._id.toString());
+    const friendsPosts = posts.filter((post) =>
+      friendsIDs.includes(post.userId.toString())
+    );
 
-    } catch (error) {
-        console.log('Error: ', error);
-        res.status(404).json({ message: error.message });
-    }
-} 
+    res.status(200).json(friendsPosts);
+  } catch (error) {
+    console.log("Error: ", error);
+    res.status(404).json({ message: error.message });
+  }
+};
+
+// get detailed post
+
+export const getPost = async (req, res) => {
+  try {
+    const { postId } = req.params;
+
+    const review = await Post.findById(postId);
+    res.status(200).json(review);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};

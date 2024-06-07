@@ -26,6 +26,7 @@ const HomeScreen = () => {
   const [mattress, setMattress] = useState([]);
   const auth = useSelector((state) => state.user);
 
+
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const onPressHandles = () => {
@@ -41,7 +42,9 @@ const HomeScreen = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/auth/categories`);
+        const response = await axios.get(
+          `http://localhost:3001/auth/categories`
+        );
         const data = response.data;
 
         const highLevelCategoryData = data.map((category) => ({

@@ -113,7 +113,7 @@ const SearchReviewRender = () => {
   };
 
   useEffect(() => {
-    fetchData(`${API_BASE_URL}/posts?page=1&limit=8`);
+    fetchData(`http://localhost:3001/posts?page=1&limit=30`);
   }, []);
 
   return (

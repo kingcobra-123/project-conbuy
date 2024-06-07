@@ -26,7 +26,7 @@ const UserProfilePosts = () => {
         };
         const userId = user._id;
         const response = await axios.get(
-          `${API_BASE_URL}/posts/${userId}`,
+          `http://localhost:3001/posts/${userId}`,
           config
         );
         setUserPosts(response.data);

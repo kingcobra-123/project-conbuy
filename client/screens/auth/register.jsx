@@ -7,12 +7,14 @@ import {
   TextInput,
 } from "react-native";
 import axios from "axios";
+import API_BASE_URL from "../../apiconfig";
 
 const SignUp = ({ navigation }) => {
   const [displayName, setDisplayName] = useState(null);
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState("");
+  const url = `${API_BASE_URL}/auth/register`;
 
   const handleCreateAccount = () => {
     const user = {
@@ -22,7 +24,7 @@ const SignUp = ({ navigation }) => {
     };
 
     axios
-      .post("http://localhost:3001/auth/register", user)
+      .post(url, user)
       .then((response) => {
         console.log(response.data);
         alert(
