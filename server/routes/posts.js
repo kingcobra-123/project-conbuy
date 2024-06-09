@@ -5,6 +5,7 @@ import { getFriendPosts, createPost } from "../controllers/posts.js";
 import { paginatedResults } from "../middleware/pagination.js";
 import Post from "../models/Post.js";
 import { getPost } from "../controllers/posts.js";
+import { getComments } from "../controllers/posts.js";
 
 const router = express.Router();
 
@@ -13,6 +14,7 @@ router.get("/", paginatedResults(Post), getFeedPosts);
 router.get("/:userId", verifyToken, getUserPosts);
 router.get("/:friendId/friends", verifyToken, getFriendPosts);
 router.get("/review/:postId", verifyToken, getPost);
+router.get("/review/comments/:postId", getComments);
 
 // Update Routes
 router.patch("/:id/like", verifyToken, likePost);

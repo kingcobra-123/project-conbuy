@@ -1934,6 +1934,13 @@
   resolved "https://registry.npmjs.org/@firebase/webchannel-wrapper/-/webchannel-wrapper-1.0.0.tgz"
   integrity sha512-zuWxyfXNbsKbm96HhXzainONPFqRcoZblQ++e9cAIGUuHfl2cFSBzW01jtesqWG/lqaUyX3H8O1y9oWboGNQBA==
 
+"@formatjs/intl-getcanonicallocales@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.npmjs.org/@formatjs/intl-getcanonicallocales/-/intl-getcanonicallocales-2.3.0.tgz"
+  integrity sha512-BOXbLwqQ7nKua/l7tKqDLRN84WupDXFDhGJQMFvsMVA2dKuOdRaWTxWpL3cJ7qPkoNw11Jf+Xpj4OSPBBvW0eQ==
+  dependencies:
+    tslib "^2.4.0"
+
 "@graphql-typed-document-node/core@^3.1.0":
   version "3.2.0"
   resolved "https://registry.npmjs.org/@graphql-typed-document-node/core/-/core-3.2.0.tgz"
@@ -2752,6 +2759,18 @@
   dependencies:
     "@sinonjs/commons" "^3.0.0"
 
+"@types/cldrjs@*":
+  version "0.4.28"
+  resolved "https://registry.npmjs.org/@types/cldrjs/-/cldrjs-0.4.28.tgz"
+  integrity sha512-3sU6qBTMONeM8BvBzKtylN7Q9xXwaJVc2DvGa9p3HsTvo+rhExRNSu0bapsxf/AVl2x0ZKVY7wKrRNglQ4SQzA==
+
+"@types/globalize@^1.5.0":
+  version "1.5.5"
+  resolved "https://registry.npmjs.org/@types/globalize/-/globalize-1.5.5.tgz"
+  integrity sha512-UINIthRJ3ElD3JP4kTiX+YNkctR6duTCpyzcEkafiGLxoLowvW9WiL2miayN45g9mOVqrBy2a1tgFQuCD6vdOw==
+  dependencies:
+    "@types/cldrjs" "*"
+
 "@types/hammerjs@^2.0.36":
   version "2.0.45"
   resolved "https://registry.npmjs.org/@types/hammerjs/-/hammerjs-2.0.45.tgz"
@@ -3421,6 +3440,11 @@ ci-info@^3.2.0, ci-info@^3.3.0, ci-info@^3.7.0:
   resolved "https://registry.npmjs.org/ci-info/-/ci-info-3.9.0.tgz"
   integrity sha512-NIxF55hv4nSqQswkAeiOi1r83xy8JldOFDTWiug55KBu9Jnblncd2U6ViHmYgHf01TPZS77NJBhBMKdWj9HQMQ==
 
+cldrjs@^0.5.4, cldrjs@^0.5.5:
+  version "0.5.5"
+  resolved "https://registry.npmjs.org/cldrjs/-/cldrjs-0.5.5.tgz"
+  integrity sha512-KDwzwbmLIPfCgd8JERVDpQKrUUM1U4KpFJJg2IROv89rF172lLufoJnqJ/Wea6fXL5bO6WjuLMzY8V52UWPvkA==
+
 clean-stack@^2.0.0:
   version "2.2.0"
   resolved "https://registry.npmjs.org/clean-stack/-/clean-stack-2.2.0.tgz"
@@ -3764,7 +3788,12 @@ data-view-byte-offset@^1.0.0:
     es-errors "^1.3.0"
     is-data-view "^1.0.1"
 
-dayjs@^1.8.15:
+date-fns@^3.6.0:
+  version "3.6.0"
+  resolved "https://registry.npmjs.org/date-fns/-/date-fns-3.6.0.tgz"
+  integrity sha512-fRHTG8g/Gif+kSh50gaGEdToemgfj74aRX3swtiouboip5JDLAyDE9F11nHMIcvOaXeOC6D7SpNhi7uFyB7Uww==
+
+dayjs@^1.10.1, dayjs@^1.8.15:
   version "1.11.11"
   resolved "https://registry.npmjs.org/dayjs/-/dayjs-1.11.11.tgz"
   integrity sha512-okzr3f11N6WuqYtZSvm+F776mB41wRZMhKP+hc34YdW+KmtYYK9iqvHSwo2k9FEH3fhGXvOPV6yz2IcSrfRUDg==
@@ -4769,6 +4798,13 @@ glob@7.1.6:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
+globalize@^1.6.0:
+  version "1.7.0"
+  resolved "https://registry.npmjs.org/globalize/-/globalize-1.7.0.tgz"
+  integrity sha512-faR46vTIbFCeAemyuc9E6/d7Wrx9k2ae2L60UhakztFg6VuE42gENVJNuPFtt7Sdjrk9m2w8+py7Jj+JTNy59w==
+  dependencies:
+    cldrjs "^0.5.4"
+
 globals@^11.1.0:
   version "11.12.0"
   resolved "https://registry.npmjs.org/globals/-/globals-11.12.0.tgz"
@@ -5535,6 +5571,11 @@ jsonify@^0.0.1:
   version "0.0.1"
   resolved "https://registry.npmjs.org/jsonify/-/jsonify-0.0.1.tgz"
   integrity sha512-2/Ki0GcmuqSrgFyelQq9M05y7PS0mEwuIzrf3f1fPqkVDVRvZrPZtVSMHxdgo8Aq0sxAOb/cr2aqqA3LeWHVPg==
+
+jsonpack@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.npmjs.org/jsonpack/-/jsonpack-1.1.5.tgz"
+  integrity sha512-d2vwomK605ks7Q+uCpbwGyoIF5j+UZuJjlYcugISBt3CxM+eBo/W6y63yVPIyIvbYON+pvJYsYZjCYbzqJj/xQ==
 
 kind-of@^6.0.2:
   version "6.0.3"
@@ -6853,6 +6894,18 @@ react-native-dotenv@^3.4.11:
     lodash "^4.17.21"
     prop-types "^15.7.2"
 
+react-native-globalize@^4.5.1:
+  version "4.5.1"
+  resolved "https://registry.npmjs.org/react-native-globalize/-/react-native-globalize-4.5.1.tgz"
+  integrity sha512-KsSDjVaJroCUJmyBmqavpBr7EfTYfOoyHtxeH/mUyOfCOcM7v/rIoMbET273f6UijHA1HqXsgOoOBC9FFjgzmQ==
+  dependencies:
+    "@types/globalize" "^1.5.0"
+    cldrjs "^0.5.5"
+    dayjs "^1.10.1"
+    globalize "^1.6.0"
+    hoist-non-react-statics "^3.3.2"
+    jsonpack "^1.1.5"
+
 react-native-paper@^5.12.3, "react-native-paper@>= 3.0.0":
   version "5.12.3"
   resolved "https://registry.npmjs.org/react-native-paper/-/react-native-paper-5.12.3.tgz"
@@ -6938,7 +6991,7 @@ react-native-vector-icons@*, react-native-vector-icons@^10.1.0, "react-native-ve
     prop-types "^15.7.2"
     yargs "^16.1.1"
 
-react-native@*, "react-native@^0.0.0-0 || >=0.60 <1.0", react-native@>=0.58, react-native@0.74.1:
+react-native@*, "react-native@^0.0.0-0 || >=0.60 <1.0", react-native@>=0.58, react-native@>=0.59.0, react-native@0.74.1:
   version "0.74.1"
   resolved "https://registry.npmjs.org/react-native/-/react-native-0.74.1.tgz"
   integrity sha512-0H2XpmghwOtfPpM2LKqHIN7gxy+7G/r1hwJHKLV6uoyXGC/gCojRtoo5NqyKrWpFC8cqyT6wTYCLuG7CxEKilg==
@@ -7011,7 +7064,7 @@ react-shallow-renderer@^16.15.0:
     object-assign "^4.1.1"
     react-is "^16.12.0 || ^17.0.0 || ^18.0.0"
 
-react@*, "react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.9.0 || ^17.0.0 || ^18", react@^18.0, react@>=15.0.0, react@>=16.3.0, react@>=16.8, react@>=16.9, react@>=17.0.0, react@18.2.0:
+react@*, "react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.9.0 || ^17.0.0 || ^18", react@^18.0, react@>=15.0.0, react@>=16.3.0, react@>=16.8, react@>=16.8.0, react@>=16.9, react@>=17.0.0, react@18.2.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==

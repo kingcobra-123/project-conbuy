@@ -11,6 +11,34 @@ const userIds = [
   new mongoose.Types.ObjectId(),
   new mongoose.Types.ObjectId(),
 ];
+
+const postIds = [
+  new mongoose.Types.ObjectId(),
+  new mongoose.Types.ObjectId(),
+  new mongoose.Types.ObjectId(),
+  new mongoose.Types.ObjectId(),
+];
+
+const rootCommentIds = [
+  new mongoose.Types.ObjectId(),
+  new mongoose.Types.ObjectId(),
+  new mongoose.Types.ObjectId(),
+  new mongoose.Types.ObjectId(),
+];
+
+const replyCommentIds = [
+  new mongoose.Types.ObjectId(),
+  new mongoose.Types.ObjectId(),
+  new mongoose.Types.ObjectId(),
+  new mongoose.Types.ObjectId(),
+];
+const nestedReplyCommentIds = [
+  new mongoose.Types.ObjectId(),
+  new mongoose.Types.ObjectId(),
+  new mongoose.Types.ObjectId(),
+  new mongoose.Types.ObjectId(),
+];
+
 export const users = [
   {
     _id: userIds[0],
@@ -19,7 +47,14 @@ export const users = [
     password: "$2b$10$S9h2fepAcgUqTuVTZ5IdfeXVBBMpySgO353EzK4DLPz/Qu.xJMk32",
     picturePath:
       "https://firebasestorage.googleapis.com/v0/b/conbuy-31e58.appspot.com/o/apptest-images%2Fprofilepic1.jpg?alt=media&token=f4e91bbc-c49d-4cf3-af2f-13dbb8dd263f",
-    friends: [userIds[1], userIds[2], userIds[3], userIds[4],userIds[5], userIds[6]],
+    friends: [
+      userIds[1],
+      userIds[2],
+      userIds[3],
+      userIds[4],
+      userIds[5],
+      userIds[6],
+    ],
     viewedProfile: 0,
     impressions: 0,
     verified: true,
@@ -60,7 +95,7 @@ export const users = [
     email: "test4@gmail.com",
     password: "$2b$10$SP98UAT.ZH5CAXpF/er0vexIluSb6wx8bAdOBBGIXVxUP76.LN6KC",
     picturePath:
-    "https://firebasestorage.googleapis.com/v0/b/conbuy-31e58.appspot.com/o/apptest-images%2FProfilepic2.jpg?alt=media&token=f36a994a-2a4a-4f5f-8946-ef7581ab101e",
+      "https://firebasestorage.googleapis.com/v0/b/conbuy-31e58.appspot.com/o/apptest-images%2FProfilepic2.jpg?alt=media&token=f36a994a-2a4a-4f5f-8946-ef7581ab101e",
     friends: [userIds[1], userIds[0]],
     viewedProfile: 0,
     impressions: 0,
@@ -74,7 +109,7 @@ export const users = [
     email: "test5@gmail.com",
     password: "$2b$10$toIEYOtWc70txG7QeFmsD.66PHe4f.trNZKXvbcB2Q6SR4zj4oX6i",
     picturePath:
-    "https://firebasestorage.googleapis.com/v0/b/conbuy-31e58.appspot.com/o/apptest-images%2FBrad-Pitt-2008.jpg?alt=media&token=9ca0e033-6348-4bd9-bbc8-8ca02be47e23",
+      "https://firebasestorage.googleapis.com/v0/b/conbuy-31e58.appspot.com/o/apptest-images%2FBrad-Pitt-2008.jpg?alt=media&token=9ca0e033-6348-4bd9-bbc8-8ca02be47e23",
     friends: [userIds[0]],
     viewedProfile: 0,
     impressions: 0,
@@ -97,12 +132,12 @@ export const users = [
     createdAt: new Date(),
   },
   {
-  _id: userIds[6],
+    _id: userIds[6],
     displayName: "scarlettJ",
     email: "scarlettj@gmail.com",
     password: "$2b$10$wZYtbeji0d5YewvNZ.yV9uS4dDBqMEAne.Q1l7ZmqE0i0Zwt2UY2e",
     picturePath:
-    "https://firebasestorage.googleapis.com/v0/b/conbuy-31e58.appspot.com/o/apptest-images%2Fscarlett_johansson.jpg?alt=media&token=96023e13-991e-4f83-8222-1d321e1f3861",
+      "https://firebasestorage.googleapis.com/v0/b/conbuy-31e58.appspot.com/o/apptest-images%2Fscarlett_johansson.jpg?alt=media&token=96023e13-991e-4f83-8222-1d321e1f3861",
     friends: [userIds[0], userIds[1]],
     viewedProfile: 0,
     impressions: 0,
@@ -112,10 +147,132 @@ export const users = [
   },
 ];
 
+export const comments = [
+  {
+    commentId: rootCommentIds[0],
+    userId: userIds[0],
+    postId: postIds[0],
+    content: "Great review! I'm thinking of buying this TV.",
+    likes: [],
+    createdAt: new Date(),
+    parentCommentId: null,
+    replies: [replyCommentIds[0]],
+  },
+  {
+    commentId: replyCommentIds[0],
+    userId: userIds[1],
+    postId: postIds[0],
+    content: "I bought it last month, and it's fantastic!",
+    likes: [],
+    createdAt: new Date(),
+    parentCommentId: rootCommentIds[0],
+    replies: [nestedReplyCommentIds[0]],
+  },
+  {
+    commentId: nestedReplyCommentIds[0],
+    userId: userIds[2],
+    postId: postIds[0],
+    content: "Good to hear! Any issues with the sound quality?",
+    likes: [],
+    createdAt: new Date(),
+    parentCommentId: replyCommentIds[0],
+    replies: [],
+  },
+  {
+    commentId: rootCommentIds[1],
+    userId: userIds[1],
+    postId: postIds[0],
+    content: "I have this TV and it's amazing!",
+    likes: [],
+    createdAt: new Date(),
+    parentCommentId: null,
+    replies: [replyCommentIds[1]],
+  },
+  {
+    commentId: replyCommentIds[1],
+    userId: userIds[1],
+    postId: postIds[0],
+    content: "I bought it last month, and it's fantastic!",
+    likes: [],
+    createdAt: new Date(),
+    parentCommentId: rootCommentIds[1],
+    replies: [nestedReplyCommentIds[1]],
+  },
+  {
+    commentId: nestedReplyCommentIds[1],
+    userId: userIds[2],
+    postId: postIds[0],
+    content: "Good to hear! Any issues with the sound quality?",
+    likes: [],
+    createdAt: new Date(),
+    parentCommentId: replyCommentIds[1],
+    replies: [],
+  },
+  {
+    commentId: rootCommentIds[2],
+    userId: userIds[2],
+    postId: postIds[0],
+    content: "I'm not a fan of this TV.",
+    likes: [],
+    createdAt: new Date(),
+    parentCommentId: null,
+    replies: [replyCommentIds[2]],
+  },
+  {
+    commentId: replyCommentIds[2],
+    userId: userIds[1],
+    postId: postIds[0],
+    content: "I bought it last month, and it's fantastic!",
+    likes: [],
+    createdAt: new Date(),
+    parentCommentId: rootCommentIds[2],
+    replies: [nestedReplyCommentIds[2]],
+  },
+  {
+    commentId: nestedReplyCommentIds[2],
+    userId: userIds[2],
+    postId: postIds[0],
+    content: "Good to hear! Any issues with the sound quality?",
+    likes: [],
+    createdAt: new Date(),
+    parentCommentId: replyCommentIds[2],
+    replies: [],
+  },
+  {
+    commentId: rootCommentIds[3],
+    userId: userIds[3],
+    postId: postIds[0],
+    content: "I'm thinking of buying this TV too.",
+    likes: [],
+    createdAt: new Date(),
+    parentCommentId: null,
+    replies: [replyCommentIds[3]],
+  },
+  {
+    commentId: replyCommentIds[3],
+    userId: userIds[1],
+    postId: postIds[0],
+    content: "I bought it last month, and it's fantastic!",
+    likes: [],
+    createdAt: new Date(),
+    parentCommentId: rootCommentIds[3],
+    replies: [nestedReplyCommentIds[3]],
+  },
+  {
+    commentId: nestedReplyCommentIds[3],
+    userId: userIds[2],
+    postId: postIds[0],
+    content: "Good to hear! Any issues with the sound quality?",
+    likes: [],
+    createdAt: new Date(),
+    parentCommentId: replyCommentIds[3],
+    replies: [],
+  },
+];
 
 export const posts = [
   {
-    postId: new mongoose.Types.ObjectId(),
+    postId: postIds[0],
     userId: userIds[5],
     displayName: "conbuyofficial",
     description: "Samsung OLED 65'' TV Review - S90C",
@@ -163,7 +320,7 @@ export const posts = [
     createdAt: new Date(),
   },
   {
-    postId: new mongoose.Types.ObjectId(),
+    postId: postIds[1],
     userId: userIds[1],
     displayName: "test2",
     description: "LG 4K C3 TV - Best 4K out there",
@@ -189,7 +346,7 @@ export const posts = [
     createdAt: new Date(),
   },
   {
-    postId: new mongoose.Types.ObjectId(),
+    postId: postIds[2],
     userId: userIds[5],
     displayName: "conbuyofficial",
     description: "Queen Mattress - WinkBed - Satisfied",
@@ -214,7 +371,7 @@ export const posts = [
     createdAt: new Date(),
   },
   {
-    postId: new mongoose.Types.ObjectId(),
+    postId: postIds[3],
     userId: userIds[1],
     displayName: "test2",
     description: "Very Comfortable Cloud Sofa",

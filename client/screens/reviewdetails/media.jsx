@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect, useRef } from "react";
+import React, { Component, useState, useEffect, useRef, useMemo } from "react";
 import {
   Text,
   View,
@@ -15,7 +15,7 @@ import { FontAwesome6 } from "@expo/vector-icons";
 
 const { width } = Dimensions.get("window");
 
-const ReviewContentMedia = ({ mediaData }) => {
+const ReviewContentMedia = React.memo(({ mediaData }) => {
   const media = mediaData;
   const videoRef = useRef(null);
 
@@ -88,7 +88,7 @@ const ReviewContentMedia = ({ mediaData }) => {
       />
     </ScrollView>
   );
-};
+});
 
 export default ReviewContentMedia;
 

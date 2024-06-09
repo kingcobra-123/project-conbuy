@@ -1,55 +1,53 @@
 import { get } from 'mongoose';
 import Post from '../models/Post.js';
 import User from '../models/user.js';
-import { getUserFriends } from './users.js';
-import mongoose from 'mongoose';
-
+import Comment from "../models/comments.js";
+import { getUserFriends } from "./users.js";
+import mongoose from "mongoose";
 
 // Create Post
 export const createPost = async (req, res) => {
-    console.log(JSON.stringify(req.body, null, 2));
-    try {
+  console.log(JSON.stringify(req.body, null, 2));
+  try {
+    const {
+      userId,
+      description,
+      content,
+      picturePath,
+      videoPath,
+      category,
+      subCategory,
+      purchaseLink,
+      purchaseDate,
+      buyOrNotBuy,
+    } = req.body;
 
-        const {
-            userId, 
-            description, 
-            content, 
-            picturePath, 
-            videoPath, 
-            category,
-            subCategory,
-            purchaseLink,
-            purchaseDate,
-            buyOrNotBuy} = req.body;
+    const user = await User.findById(userId);
+    const newPost = new Post({
+      userId: user._id,
+      displayName: user.displayName,
+      userPicture: user.picturePath,
+      postId: new mongoose.Types.ObjectId(),
+      description: description,
+      content: content,
+      picturePath: picturePath,
+      videoPath: videoPath,
+      category: category,
+      subCategory: subCategory,
+      purchaseLink: purchaseLink,
+      purchaseDate: purchaseDate,
+      buyOrNotBuy: buyOrNotBuy,
+    });
 
-        const user = await User.findById(userId);
-        const newPost = new Post({
-            userId: user._id,
-            displayName: user.displayName,
-            userPicture: user.picturePath,
-            postId: new mongoose.Types.ObjectId(),
-            description: description,
-            content: content,
-            picturePath: picturePath,
-            videoPath: videoPath,
-            category: category,
-            subCategory: subCategory,
-            purchaseLink: purchaseLink,
-            purchaseDate: purchaseDate,
-            buyOrNotBuy: buyOrNotBuy,
-        })
-        
-        await newPost.save();
+    await newPost.save();
 
-        console.log(newPost.postId);
-        res.status(201).json(newPost.postId);
-        
-        ;} catch (error) {
-            console.log('Error: ', error);
-            res.status(409).json({ message: error.message });
-        }
-    }
-
+    console.log(newPost.postId);
+    res.status(201).json(newPost.postId);
+  } catch (error) {
+    console.log("Error: ", error);
+    res.status(409).json({ message: error.message });
+  }
+};
 
 // Read Post
 
@@ -173,3 +171,41 @@ export const getPost = async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 };
+
+// get comments
+
+export const getComments = async (req, res) => {
+  try {
+    const { postId } = req.params;
+
+    // Find comments by postId
+    const comments = await Comment.find({ postId }).populate("userId");
+
+    // Segregate comments into root comments and reply comments
+    const rootComments = [];
+    const replyComments = {};
+
+    comments.forEach((comment) => {
+      if (!comment.parentCommentId) {
+        rootComments.push(comment);
+      } else {
+        if (!replyComments[comment.parentCommentId]) {
+          replyComments[comment.parentCommentId] = [];
+        }
+        replyComments[comment.parentCommentId].push(comment);
+      }
+    });
+
+    console.log(rootComments);
+    console.log(replyComments);
+
+    // Send the segregated comments as response
+    res.status(200).json({
+      rootComments,
+      replyComments,
+    });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+

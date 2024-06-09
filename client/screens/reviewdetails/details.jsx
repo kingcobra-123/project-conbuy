@@ -1,11 +1,13 @@
-import React, { Component } from "react";
-import { Text, View, StyleSheet, Dimensions } from "react-native";
+import React, { Component, useMemo } from "react";
+import { Text, View, StyleSheet, Dimensions, Image } from "react-native";
 import { AntDesign, FontAwesome6 } from "@expo/vector-icons";
+import { FlatList } from "react-native-gesture-handler";
 
 const { width } = Dimensions.get("window");
 
-const ReviewContentDetails = ({ reviewData }) => {
+const ReviewContentDetails = React.memo(({ reviewData, comments }) => {
   const reviewDetails = reviewData;
+  const reviewComments = comments;
 
   return (
     <View style={styles.detailsContainer}>
@@ -31,7 +33,7 @@ const ReviewContentDetails = ({ reviewData }) => {
           </View>
         )}
       </View>
-      <View style={{ flex: 1, height: 500 }}>
+      <View style={{ flex: 1 }}>
         <Text>{reviewDetails.content}</Text>
         <View style={styles.commentheader}>
           <View style={styles.header}>
@@ -46,7 +48,7 @@ const ReviewContentDetails = ({ reviewData }) => {
       </View>
     </View>
   );
-};
+});
 
 export default ReviewContentDetails;
 
@@ -71,7 +73,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "lightgrey",
     width: width,
-    height: 500,
     backgroundColor: "white",
   },
   postTitle: {

@@ -18,9 +18,9 @@ import { create } from 'domain';
 import User from './models/user.js';
 import Post from './models/Post.js';
 import Category from './models/categories.js';
-import { users, posts, categories } from './data/index.js';
-import { verifyToken } from './middleware/auth.js';
-
+import Comment from "./models/comments.js";
+import { users, posts, categories, comments } from "./data/index.js";
+import { verifyToken } from "./middleware/auth.js";
 
 // configuratios
 const __filename = fileURLToPath(import.meta.url);
@@ -29,48 +29,48 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(helmet());
-app.use(helmet.crossOriginResourcePolicy({policy: 'cross-origin'}));
-app.use(morgan('common'));
-app.use(bodyParser.json({limit: '30mb', extended: true}));
-app.use(bodyParser.urlencoded({limit: '30mb', extended: true}));
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+app.use(morgan("common"));
+app.use(bodyParser.json({ limit: "30mb", extended: true }));
+app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
-app.use("/assets", express.static(path.join(__dirname, 'public/assets')));
-
+app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
 // File Storage
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'public/assets');
-    },
-    filename: (req, file, cb) => {
-        cb(null, file.originalname);
-    }
+  destination: (req, file, cb) => {
+    cb(null, "public/assets");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
 });
-const upload = multer({storage: storage});
+const upload = multer({ storage: storage });
 
 // app.post("/posts", verifyToken, upload.single('picture'), createPost);
 
-
 // Routes
-app.use('/auth', authRoutes);
+app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 
 // Mongoose setup
 
 const PORT = process.env.PORT || 3500;
-mongoose.connect(process.env.MONGO_URL)
-.then(() => {
+mongoose
+  .connect(process.env.MONGO_URL)
+  .then(() => {
     app.listen(PORT, () => {
-        console.log(`Server running on port ${PORT}`);
+      console.log(`Server running on port ${PORT}`);
 
-        // to load test data - RUN ONLY ONCE!!!
-        // User.insertMany(users);
-        // Post.insertMany(posts);
-        // Category.insertMany(categories);
+      // to load test data - RUN ONLY ONCE!!!
+      // User.insertMany(users);
+      // Post.insertMany(posts);
+      // Comment.insertMany(comments);
+      // Category.insertMany(categories);
     });
-    console.log('Database connected');
-}).catch((err) => {
-    console.log('Database connection error: ', err);
-}
-);
+    console.log("Database connected");
+  })
+  .catch((err) => {
+    console.log("Database connection error: ", err);
+  });
