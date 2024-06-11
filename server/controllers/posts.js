@@ -209,3 +209,56 @@ export const getComments = async (req, res) => {
   }
 };
 
+// Create comment
+
+export const createComment = async (req, res) => {
+  console.log("createComment");
+  try {
+    const { postId } = req.params;
+    const { userId, content, parentCommentId } = req.body;
+
+    console.log("userId: ", userId);
+    console.log("content: ", content);
+    console.log("parentCommentId: ", parentCommentId);
+
+    // Check if content is empty
+    if (!content || content.trim() === "") {
+      return res.status(400).json({ message: "Comment cannot be empty" });
+    }
+
+    const newComment = new Comment({
+      commentId: new mongoose.Types.ObjectId(),
+      userId,
+      postId,
+      content,
+    });
+
+    // Add parentCommentId only if it is provided
+    if (parentCommentId) {
+      newComment.parentCommentId = parentCommentId;
+    } else {
+      newComment.parentCommentId = null;
+    }
+
+    await newComment.save();
+
+    // Query user details
+    const user = await User.findById(userId)
+      .select("displayName email picturePath")
+      .exec();
+
+   
+    // Populate user details
+    const populatedComment = await Comment.findById(newComment._id)
+      .populate("userId")
+      .exec();
+
+    
+
+
+    res.status(201).json(populatedComment);
+  } catch (error) {
+    res.status(409).json({ message: error.message });
+  }
+};
+

@@ -15,6 +15,8 @@ import FnFContent from "../screens/fnf/content";
 import ReviewContentRender from "../screens/reviewdetails/render";
 import { useTheme } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { useEffect } from "react";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 const Tab = createMaterialBottomTabNavigator();
 const ListingsStack = createStackNavigator();

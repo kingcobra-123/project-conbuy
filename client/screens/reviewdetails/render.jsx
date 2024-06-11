@@ -5,7 +5,14 @@ import React, {
   useRef,
   useCallback,
 } from "react";
-import { Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+} from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { FlatList } from "react-native-gesture-handler";
 import {
@@ -13,10 +20,13 @@ import {
   differenceInHours,
   formatDistanceToNow,
 } from "date-fns";
+import EvilIcons from "react-native-vector-icons/EvilIcons";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 import ReviewContentHeader from "./header";
 import ReviewContentMedia from "./media";
 import ReviewContentDetails from "./details";
+import ReviewCommentsForm from "./comments/commentsform";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -35,8 +45,10 @@ const ReviewContentRender = () => {
   const [comments, setComments] = useState([]);
   const [replyComments, setReplyComments] = useState([]);
   const [visibleReplies, setVisibleReplies] = useState({});
+  const [replyingToCommentId, setReplyingToCommentId] = useState(null);
+  const [currentParentCommentId, setCurrentParentCommentId] = useState(null);
 
-  const commendId = "66657b760d02bbb687e32b6d";
+  const commendId = "6666706e9c0e3c9d19ba2577";
 
   useEffect(() => {
     const fetchdata = async () => {
@@ -107,6 +119,11 @@ const ReviewContentRender = () => {
       <ScrollView>
         <ReviewContentMedia mediaData={mediaData} />
         <ReviewContentDetails reviewData={listing} comments={comments} />
+        <ReviewCommentsForm
+          postId={commendId}
+          parentCommentId={currentParentCommentId}
+          onCommentAdded={handleCommentAdded}
+        />
       </ScrollView>
     ),
     [mediaData, listing, comments]
@@ -133,6 +150,29 @@ const ReviewContentRender = () => {
     }));
   }, []);
 
+  const toggleReplyingToCommentId = (commentId) => {
+    setReplyingToCommentId((prevState) =>
+      prevState === commentId ? null : commentId
+    );
+    setCurrentParentCommentId((prevState) =>
+      prevState === commentId ? null : commentId
+    );
+  };
+
+  const handleCommentAdded = (newComment) => {
+    if (newComment.parentCommentId) {
+      setReplyComments((prevState) => ({
+        ...prevState,
+        [newComment.parentCommentId]: [
+          ...(prevState[newComment.parentCommentId] || []),
+          newComment,
+        ],
+      }));
+    } else {
+      setComments((prevState) => [newComment, ...prevState]);
+    }
+  };
+
   const renderReplies = (parentCommentId) => {
     const replies = replyComments[parentCommentId] || [];
     return replies.map((reply) => (
@@ -144,7 +184,26 @@ const ReviewContentRender = () => {
         <View style={{ flexDirection: "column", paddingLeft: 5 }}>
           <Text style={styles.commentText}>{reply.userId.displayName}</Text>
           <Text style={styles.commentText}>{reply.content}</Text>
-          <Text style={styles.commentText}>{formatDate(reply.createdAt)}</Text>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.commentText}>
+              {formatDate(reply.createdAt)}
+            </Text>
+            <EvilIcons name="heart" size={15} color="black" />
+            <MaterialCommunityIcons
+              name="reply-circle"
+              size={15}
+              color="#F7A70B"
+              onPress={() => toggleReplyingToCommentId(reply.commentId)}
+            />
+            <Text style={{ fontSize: 10, paddingLeft: 5 }}>Reply</Text>
+          </View>
+          {replyingToCommentId === reply.commentId && (
+            <ReviewCommentsForm
+              postId={commendId}
+              parentCommentId={currentParentCommentId}
+              onCommentAdded={handleCommentAdded}
+            />
+          )}
         </View>
       </View>
     ));
@@ -153,38 +212,63 @@ const ReviewContentRender = () => {
   return (
     <View style={{ flex: 1 }}>
       <ReviewContentHeader />
+
       <FlatList
         data={comments}
         keyExtractor={(item) => item._id}
         ListHeaderComponent={renderHeader}
         renderItem={({ item }) => (
-          <View style={styles.commentContainer}>
-            <Image
-              source={{ uri: item.userId.picturePath }}
-              style={{ width: 30, height: 30, borderRadius: 30, marginTop: 5 }}
-            ></Image>
-            <View style={{ flexDirection: "column", paddingLeft: 5 }}>
-              <Text style={styles.commentText}>{item.userId.displayName}</Text>
-              <Text style={styles.commentText}>{item.content}</Text>
-              <View style={{ flexDirection: "row" }}>
+          <View>
+            <View style={styles.commentContainer}>
+              <Image
+                source={{ uri: item.userId.picturePath }}
+                style={{
+                  width: 30,
+                  height: 30,
+                  borderRadius: 30,
+                  marginTop: 5,
+                }}
+              ></Image>
+              <View style={{ flexDirection: "column", paddingLeft: 5 }}>
                 <Text style={styles.commentText}>
-                  {formatDate(item.createdAt)}
+                  {item.userId.displayName}
                 </Text>
-                <TouchableOpacity
-                  onPress={() => toggleRepliesVisibility(item.commentId)}
-                >
-                  <Text style={{ fontSize: 10, paddingLeft: 5 }}>
-                    {replyComments[item.commentId] &&
-                    replyComments[item.commentId].length > 0
-                      ? visibleReplies[item.commentId]
-                        ? "Hide replies"
-                        : "Show replies"
-                      : "Reply"}
+                <Text style={styles.commentText}>{item.content}</Text>
+                <View style={{ flexDirection: "row" }}>
+                  <Text style={styles.commentText}>
+                    {formatDate(item.createdAt)}
                   </Text>
-                </TouchableOpacity>
+                  <EvilIcons name="heart" size={15} color="black" />
+                  <MaterialCommunityIcons
+                    name="reply-circle"
+                    size={15}
+                    color="#F7A70B"
+                    onPress={() => toggleReplyingToCommentId(item.commentId)}
+                  />
+                  <TouchableOpacity
+                    onPress={() => toggleRepliesVisibility(item.commentId)}
+                  >
+                    <Text style={{ fontSize: 10, paddingLeft: 5 }}>
+                      {replyComments[item.commentId] &&
+                      replyComments[item.commentId].length > 0
+                        ? visibleReplies[item.commentId]
+                          ? "Hide replies"
+                          : "Show replies"
+                        : "Reply"}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                {visibleReplies[item.commentId] &&
+                  renderReplies(item.commentId)}
               </View>
-              {visibleReplies[item.commentId] && renderReplies(item.commentId)}
             </View>
+            {replyingToCommentId === item.commentId && (
+              <ReviewCommentsForm
+                postId={commendId}
+                parentCommentId={currentParentCommentId}
+                onCommentAdded={handleCommentAdded}
+              />
+            )}
           </View>
         )}
       />
